@@ -24,12 +24,11 @@ export default {
   name: 'AppFooter',
   setup() {
     const store = useStore()
-    const currentYear = ref(computed(() => {
-      return new Date().getFullYear()
-    }))
+    const navLinks = computed(() => store.getters.navLinks)
+    const currentYear = ref(computed(() => new Date().getFullYear()))
 
     return {
-      navLinks: computed(() => store.getters.navLinks),
+      navLinks,
       currentYear
     }
   }

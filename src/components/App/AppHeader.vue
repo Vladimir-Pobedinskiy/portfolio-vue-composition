@@ -71,7 +71,6 @@ export default {
     }
 
     onMounted(() => {
-      console.log(navigation.value)
       setupHammer()
       handleWindowResize()
       window.addEventListener('resize', handleWindowResize)
