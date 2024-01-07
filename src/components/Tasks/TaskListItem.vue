@@ -8,7 +8,7 @@
         </button>
       </div>
       <div class="task-list-item__input-wrapper" :class="{ 'visually-hidden': inputHiddenFlag }">
-        <input v-model="inputValue" class="task-list-item__input p3" type="text">
+        <input v-model="inputValue" class="task-list-item__input p3" type="text" name="task-name">
         <button class="task-list-item__btn-close-input" type="button" @click="editCurrentTask(), inputHiddenFlag = true">
           {{ !inputValue.length ? 'Закрыть' : 'Сохранить' }}
         </button>
