@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { ref } from 'vue'
 import UIModal from '@/components/UI/Modal/UIModal'
 import TaskTagList from '@/components/Tasks/TaskTagList'
 export default {
@@ -34,38 +35,47 @@ export default {
     }
   },
   emits: ['editSelectedTags'],
-  data() {
-    return {
-      showModal: false,
-      modalSettings: {
-        name: 'ModalTags',
-        lockScroll: true, // Прокрутка body во время отображения модального окна
-        clickToClose: true, // Закрытие модального окна при нажатии на наложение модального окна
-        escToClose: true, // Нажмите esc, чтобы закрыть модальное окно
-        hideOverlay: false // Скрытие отображения наложения
-      },
-      tags: [
-        { title: 'home', selected: false },
-        { title: 'travel', selected: false },
-        { title: 'work', selected: false }
-      ],
-      selectedTags: []
+  setup(props, { emit }) {
+    const showModal = ref(false)
+    const modalSettings = {
+      name: 'ModalTags',
+      lockScroll: true, // Прокрутка body во время отображения модального окна
+      clickToClose: true, // Закрытие модального окна при нажатии на наложение модального окна
+      escToClose: true, // Нажмите esc, чтобы закрыть модальное окно
+      hideOverlay: false // Скрытие отображения наложения
     }
-  },
-  methods: {
-    openModal() {
-      this.showModal = true
-    },
-    handleSelectedTags(selectedTags) {
-      this.selectedTags = selectedTags
-    },
-    editSelectedTags() {
-      this.$emit('editSelectedTags', this.selectedTags)
-      this.selectedTags.length = 0
-      this.tags.forEach((item) => {
+    const tags = ref([
+      { title: 'home', selected: false },
+      { title: 'travel', selected: false },
+      { title: 'work', selected: false }
+    ])
+    const selectedTags = ref([])
+
+    const openModal = () => {
+      showModal.value = true
+    }
+
+    const handleSelectedTags = (selectedItems) => {
+      selectedTags.value = selectedItems
+    }
+
+    const editSelectedTags = () => {
+      emit('editSelectedTags', selectedTags.value)
+      selectedTags.value.length = 0
+      tags.value.forEach((item) => {
         item.selected = false
       })
-      this.showModal = false
+      showModal.value = false
+    }
+
+    return {
+      showModal,
+      modalSettings,
+      tags,
+      selectedTags,
+      openModal,
+      handleSelectedTags,
+      editSelectedTags
     }
   }
 }
