@@ -30,44 +30,43 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { ref, computed } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 import AppLoading from '@/components/App/AppLoading'
 import axios from 'axios'
 export default {
   name: 'HeroView',
   components: { AppLoading },
-  data() {
-    return {
-      breadcrumbs: [],
-      hero: {}
-    }
-  },
-  computed: {
-    ...mapGetters({
-      isLoading: 'isLoading'
-    })
-  },
-  created() {
-    this.getHero()
-  },
-  methods: {
-    ...mapActions({
-      startLoading: 'startLoading',
-      endLoading: 'endLoading'
-    }),
-    async getHero() {
+  setup() {
+    const store = useStore()
+    const router = useRouter()
+    const breadcrumbs = ref([])
+    const hero = ref({})
+    const isLoading = computed(() => store.getters.isLoading)
+    const startLoading = () => store.dispatch('startLoading')
+    const endLoading = () => store.dispatch('endLoading')
+
+    const getHero = async () => {
       try {
-        this.startLoading()
-        const currentHeroRouteName = this.$route.params.heroView
+        startLoading()
+        const currentHeroRouteName = router.currentRoute.value.params.heroView
         const response = await axios.get(`/api/${currentHeroRouteName}/`)
-        this.breadcrumbs = response.data.breadcrumbs
-        this.hero = response.data.description
-        this.endLoading()
+        breadcrumbs.value = response.data.breadcrumbs
+        hero.value = response.data.description
+        endLoading()
       } catch (error) {
-        this.endLoading()
-        this.$router.push({ name: 'not-found-view' })
+        endLoading()
+        router.push({ name: 'not-found-view' })
         console.error('Error fetching hero:', error)
       }
+    }
+    getHero()
+
+    return {
+      breadcrumbs,
+      hero,
+      isLoading
     }
   }
 }
