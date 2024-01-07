@@ -29,7 +29,6 @@
 <script>
 import HeroCard from '@/components/Hero/HeroCard'
 import UISlider from '@/components/UI/Slider/UISlider'
-
 import { SwiperSlide } from 'swiper/vue'
 import { Navigation, Autoplay, Keyboard } from 'swiper/modules'
 
@@ -42,52 +41,55 @@ export default {
       required: true
     }
   },
-  data() {
-    return {
-      modules: [Navigation, Autoplay, Keyboard],
-      swiperOptions: {
-        slidesPerView: 1.2,
-        spaceBetween: 8,
-        speed: 900,
-        autoplay: {
-          delay: 4000
+  setup() {
+    const modules = [Navigation, Autoplay, Keyboard]
+    const swiperOptions = {
+      slidesPerView: 1.2,
+      spaceBetween: 8,
+      speed: 900,
+      autoplay: {
+        delay: 4000
+      },
+      keyboard: true,
+      navigation: {
+        nextEl: '.hero-swiper__button-next',
+        prevEl: '.hero-swiper__button-prev'
+      },
+      breakpoints: {
+        320: {
+          slidesPerView: 1.2,
+          spaceBetween: 8
         },
-        keyboard: true,
-        navigation: {
-          nextEl: '.hero-swiper__button-next',
-          prevEl: '.hero-swiper__button-prev'
+        400: {
+          slidesPerView: 1.3,
+          spaceBetween: 8
         },
-        breakpoints: {
-          320: {
-            slidesPerView: 1.2,
-            spaceBetween: 8
-          },
-          400: {
-            slidesPerView: 1.3,
-            spaceBetween: 8
-          },
-          576: {
-            slidesPerView: 1.5,
-            spaceBetween: 8
-          },
-          700: {
-            slidesPerView: 2.1,
-            spaceBetween: 8
-          },
-          767: {
-            slidesPerView: 2.3,
-            spaceBetween: 16
-          },
-          992: {
-            slidesPerView: 2.5,
-            spaceBetween: 16
-          },
-          1200: {
-            slidesPerView: 3,
-            spaceBetween: 16
-          }
+        576: {
+          slidesPerView: 1.5,
+          spaceBetween: 8
+        },
+        700: {
+          slidesPerView: 2.1,
+          spaceBetween: 8
+        },
+        767: {
+          slidesPerView: 2.3,
+          spaceBetween: 16
+        },
+        992: {
+          slidesPerView: 2.5,
+          spaceBetween: 16
+        },
+        1200: {
+          slidesPerView: 3,
+          spaceBetween: 16
         }
       }
+    }
+
+    return {
+      modules,
+      swiperOptions
     }
   }
 }
