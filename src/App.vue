@@ -6,14 +6,16 @@
   </main>
 
   <AppFooter />
+  <ModalError />
 </template>
 
 <script>
 import AppHeader from '@/components/App/AppHeader'
 import AppFooter from '@/components/App/AppFooter'
+import ModalError from '@/components/Modals/ModalError'
 
 export default {
   name: 'App',
-  components: { AppHeader, AppFooter }
+  components: { AppHeader, AppFooter, ModalError }
 }
 </script>

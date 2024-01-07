@@ -24,6 +24,7 @@ import { useStore } from 'vuex'
 import AppLoading from '@/components/App/AppLoading'
 import axios from 'axios'
 import HeroSlider from '@/components/Hero/HeroSlider'
+import { useVfm } from 'vue-final-modal'
 
 export default {
   components: { AppLoading, HeroSlider },
@@ -33,6 +34,7 @@ export default {
     const breadcrumbs = ref([])
     const description = ref({})
     const heroList = ref([])
+    const vfm = useVfm()
     const isLoading = computed(() => store.getters.isLoading)
     const startLoading = () => store.dispatch('startLoading')
     const endLoading = () => store.dispatch('endLoading')
@@ -47,7 +49,7 @@ export default {
         endLoading()
       } catch (error) {
         endLoading()
-        // $vfm.open('ModalError')
+        vfm.open('ModalError')
         console.error('Error fetching heroes:', error)
       }
     }
