@@ -18,15 +18,19 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { ref, computed } from 'vue'
+import { useStore } from 'vuex'
 export default {
   name: 'AppFooter',
-  computed: {
-    ...mapGetters({
-      navLinks: 'navLinks'
-    }),
-    currentYear() {
+  setup() {
+    const store = useStore()
+    const currentYear = ref(computed(() => {
       return new Date().getFullYear()
+    }))
+
+    return {
+      navLinks: computed(() => store.getters.navLinks),
+      currentYear
     }
   }
 }

@@ -21,62 +21,71 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
 import { screens, scrollController } from '@/utils/utils'
 import Hammer from 'hammerjs'
 export default {
   name: 'AppHeader',
-  data() {
-    return {
-      mc: null
+  setup() {
+    const store = useStore()
+    const route = useRoute()
+    const navLinks = computed(() => store.getters.navLinks)
+    const isOpen = computed(() => store.getters.isOpen)
+    const navigation = ref(null)
+    const mc = ref(null)
+    const toggleState = (value) => {
+      store.dispatch('toggleState', value)
     }
-  },
-  computed: {
-    ...mapGetters({
-      navLinks: 'navLinks',
-      isOpen: 'isOpen'
-    })
-  },
-  watch: {
-    $route() {
-      if (this.isOpen === 'navigation') {
-        this.toggleState(this.isOpen)
-      }
-    },
-    isOpen(value) {
+
+    watch(isOpen, (value) => {
       if (value === 'navigation') {
         scrollController.disabledScroll()
       } else {
         scrollController.enabledScroll()
       }
-    }
-  },
-  mounted() {
-    this.setupHammer()
-    this.handleWindowResize()
-    window.addEventListener('resize', this.handleWindowResize)
-  },
-  unmounted() {
-    window.removeEventListener('resize', this.handleWindowResize)
-  },
-  methods: {
-    ...mapActions({
-      toggleState: 'toggleState'
-    }),
-    setupHammer() {
-      const hammer = new Hammer.Manager(this.$refs.navigation)
+    })
+
+    watch(route, () => {
+      if (isOpen.value === 'navigation') {
+        toggleState(isOpen.value)
+      }
+    })
+
+    const setupHammer = () => {
+      const hammer = new Hammer.Manager(navigation.value)
       hammer.add(new Hammer.Swipe({ direction: Hammer.DIRECTION_HORIZONTAL }))
       hammer.on('swipeleft', () => {
-        this.toggleState(this.isOpen)
+        toggleState(isOpen.value)
       })
-      this.mc = hammer
-    },
-    handleWindowResize() {
+      mc.value = hammer
+    }
+
+    const handleWindowResize = () => {
       if (window.innerWidth >= parseInt(screens.desktop)) {
-        this.mc.set({ enable: false })
+        mc.value.set({ enable: false })
       } else {
-        this.mc.set({ enable: true })
+        mc.value.set({ enable: true })
       }
+    }
+
+    onMounted(() => {
+      console.log(navigation.value)
+      setupHammer()
+      handleWindowResize()
+      window.addEventListener('resize', handleWindowResize)
+    })
+
+    onUnmounted(() => {
+      window.removeEventListener('resize', handleWindowResize)
+    })
+
+    return {
+      navLinks,
+      isOpen,
+      toggleState,
+      navigation
     }
   }
 }
