@@ -1,16 +1,8 @@
+import axios from 'axios'
 
 export const navLinks = {
   state: {
-    navLinks: [
-      {
-        title: 'Главная',
-        url: '/'
-      },
-      {
-        title: 'Обо мне',
-        url: '/about'
-      }
-    ]
+    navLinks: []
   },
   mutations: {
     SET_NAV_LINKS(state, payload) {
@@ -18,14 +10,14 @@ export const navLinks = {
     }
   },
   actions: {
-    // async getNavLinks({ commit }) {
-    //   try {
-    //     const response = await axios.get('/api/main/')
-    //     commit('SET_NAV_LINKS', response.data.navLinks)
-    //   } catch (error) {
-    //     console.error('Error fetching navLinks:', error)
-    //   }
-    // }
+    async getNavLinks({ commit }) {
+      try {
+        const response = await axios.get('/api/main/')
+        commit('SET_NAV_LINKS', response.data.navLinks)
+      } catch (error) {
+        console.error('Error fetching navLinks:', error)
+      }
+    }
   },
   getters: {
     navLinks(state) {

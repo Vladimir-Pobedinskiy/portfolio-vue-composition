@@ -12,23 +12,22 @@
 <script>
 export default {
   name: 'HomeView',
-  data() {
-    return {
-      description: {
-        title: 'В этом портфолио реализовано:',
-        descriptionList: [
-          'Установка и настройка Vue CLI',
-          'Установка и настройка Vue-router и Vuex',
-          'Настройка vue.config.js',
-          'Использование Composition Api',
-          'Динамическая перерисовка без перезагрузки страницы',
-          'Динамические маршруты',
-          'Обработка несуществующих routes',
-          'Хранение и взаимодействие с данными из Supabase',
-          'Адаптивная верстка по принципу Mobile First'
-        ]
-      }
+  setup() {
+    const description = {
+      title: 'В этом портфолио реализовано:',
+      descriptionList: [
+        'Установка и настройка Vue CLI',
+        'Установка и настройка Vue-router и Vuex',
+        'Настройка vue.config.js',
+        'Использование Composition Api',
+        'Динамическая перерисовка без перезагрузки страницы',
+        'Динамические маршруты',
+        'Обработка несуществующих routes',
+        'Хранение и взаимодействие с данными из Supabase',
+        'Адаптивная верстка по принципу Mobile First'
+      ]
     }
+    return { description }
   }
 }
 </script>

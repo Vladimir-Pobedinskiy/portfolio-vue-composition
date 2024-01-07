@@ -9,4 +9,8 @@ const app = createApp(App)
 app.use(router)
 app.use(store)
 
+if (app.config.globalProperties.$store) {
+  app.config.globalProperties.$store.dispatch('getNavLinks')
+}
+
 app.mount('#app')

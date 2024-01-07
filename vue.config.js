@@ -16,7 +16,7 @@ function getBaseUrl(isDev, isDemo, isProd) {
 
 module.exports = defineConfig({
   // нужно ли транспилировать зависимости (dependencies) через Babel.
-  // transpileDependencies: true,
+  transpileDependencies: true,
   // Базовый URL-адрес сборки вашего приложения, по которому оно будет опубликовано (именуемая как baseUrl до версии Vue CLI 3.3).
   // Это аналог опции webpack output.publicPath, но Vue CLI также использует это значение в других целях, поэтому вы должны всегда
   // использовать publicPath вместо изменения опции output.publicPath
@@ -66,11 +66,11 @@ module.exports = defineConfig({
     appleMobileWebAppStatusBarStyle: 'black', // Стиль полосы состояния iOS
     manifestOptions: {
       icons: [
-        {
-          src: './img/pwa/icon.png',
-          sizes: '192x192',
-          type: 'image/png'
-        }
+        // {
+        //   src: './img/pwa/icon.png',
+        //   sizes: '192x192',
+        //   type: 'image/png'
+        // }
         // {
         //   src: './img/pwa/icon-512x512.png',
         //   sizes: '512x512',
@@ -86,6 +86,14 @@ module.exports = defineConfig({
   },
 
   chainWebpack: (config) => {
+    config.plugin('define').tap((definitions) => {
+      Object.assign(definitions[0], {
+        __VUE_OPTIONS_API__: 'true',
+        __VUE_PROD_DEVTOOLS__: 'false',
+        __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'false'
+      })
+      return definitions
+    })
     // style-resources-loader
     config.module
       .rule('scss')
