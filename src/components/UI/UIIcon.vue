@@ -24,11 +24,6 @@ export default {
       type: String,
       required: true
     }
-  },
-  computed: {
-    icon() {
-      return this.iconName
-    }
   }
 }
 </script>

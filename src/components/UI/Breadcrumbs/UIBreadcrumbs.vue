@@ -27,7 +27,6 @@
 <script>
 export default {
   name: 'UIBreadcrumbs',
-
   props: {
     breadcrumbs: {
       type: Array,

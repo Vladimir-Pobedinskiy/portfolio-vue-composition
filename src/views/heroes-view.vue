@@ -19,7 +19,8 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { ref, computed } from 'vue'
+import { useStore } from 'vuex'
 import AppLoading from '@/components/App/AppLoading'
 import axios from 'axios'
 import HeroSlider from '@/components/Hero/HeroSlider'
@@ -27,40 +28,38 @@ import HeroSlider from '@/components/Hero/HeroSlider'
 export default {
   components: { AppLoading, HeroSlider },
   name: 'HeroesView',
-  data() {
-    return {
-      breadcrumbs: [],
-      description: {},
-      heroList: []
-    }
-  },
-  computed: {
-    ...mapGetters({
-      isLoading: 'isLoading'
-    })
-  },
-  created() {
-    this.getData()
-  },
-  methods: {
-    ...mapActions({
-      startLoading: 'startLoading',
-      endLoading: 'endLoading'
-    }),
-    async getData() {
+  setup() {
+    const store = useStore()
+    const breadcrumbs = ref([])
+    const description = ref({})
+    const heroList = ref([])
+    const isLoading = computed(() => store.getters.isLoading)
+    const startLoading = () => store.dispatch('startLoading')
+    const endLoading = () => store.dispatch('endLoading')
+
+    const getData = async () => {
       try {
-        this.startLoading()
+        startLoading()
         const response = await axios.get('/api/heroes/')
-        this.breadcrumbs = response.data.breadcrumbs
-        this.description = response.data.description
-        this.heroList = response.data.heroList
-        this.endLoading()
+        breadcrumbs.value = response.data.breadcrumbs
+        description.value = response.data.description
+        heroList.value = response.data.heroList
+        endLoading()
       } catch (error) {
-        this.endLoading()
-        this.$vfm.open('ModalError')
+        endLoading()
+        // $vfm.open('ModalError')
         console.error('Error fetching heroes:', error)
       }
     }
+    getData()
+
+    return {
+      breadcrumbs,
+      description,
+      heroList,
+      isLoading
+    }
   }
+
 }
 </script>
