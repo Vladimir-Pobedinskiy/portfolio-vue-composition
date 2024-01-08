@@ -129,12 +129,14 @@
 </template>
 
 <script>
+import AppLoading from '@/components/App/AppLoading'
 import { Form, Field } from 'vee-validate'
 import * as Yup from 'yup'
 import { passwordVisibility } from '@/utils/utils'
 import { IMaskDirective } from 'vue-imask'
-import { mapGetters, mapActions } from 'vuex'
-import AppLoading from '@/components/App/AppLoading'
+import { ref, computed } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 // import axios from 'axios'
 import { supabase } from '@/supabase'
 
@@ -144,69 +146,70 @@ export default {
   directives: {
     imask: IMaskDirective
   },
-  data() {
-    return {
-      form: {
-        user: {
-          surname: '',
-          name: '',
-          tel: '',
-          email: '',
-          password: '',
-          repeatPassword: ''
-        }
-      },
-      schema: Yup.object().shape({
-        surname: Yup.string().nullable(),
-        name: Yup.string().required('Имя обязательно для заполнения'),
-        tel: Yup.string().required('Телефон обязателен для заполнения').min(18, 'Неверный формат номера телефона'),
-        email: Yup.string().required('Email обязателен для заполнения').email('Неверный формат электронной почты'),
-        password: Yup.string().required('Пароль обязателен для заполнения').min(6, 'Пароль должен содержать минимум 6 символов'),
-        repeatPassword: Yup.string().required('Повторный пароль обязателен для заполнения').min(6, 'Пароль должен содержать минимум 6 символов')
-      })
-    }
-  },
-  computed: {
-    ...mapGetters({
-      isLoading: 'isLoading',
-      user: 'user'
+  setup() {
+    const store = useStore()
+    const router = useRouter()
+    const form = ref({
+      user: {
+        surname: '',
+        name: '',
+        tel: '',
+        email: '',
+        password: '',
+        repeatPassword: ''
+      }
     })
-  },
-  methods: {
-    ...mapActions({
-      startLoading: 'startLoading',
-      endLoading: 'endLoading',
-      setUser: 'setUser'
-    }),
-    togglePasswordVisibility(event) {
+    const schema = Yup.object().shape({
+      surname: Yup.string().nullable(),
+      name: Yup.string().required('Имя обязательно для заполнения'),
+      tel: Yup.string().required('Телефон обязателен для заполнения').min(18, 'Неверный формат номера телефона'),
+      email: Yup.string().required('Email обязателен для заполнения').email('Неверный формат электронной почты'),
+      password: Yup.string().required('Пароль обязателен для заполнения').min(6, 'Пароль должен содержать минимум 6 символов'),
+      repeatPassword: Yup.string().required('Повторный пароль обязателен для заполнения').min(6, 'Пароль должен содержать минимум 6 символов')
+    })
+    const isLoading = computed(() => store.getters.isLoading)
+    const startLoading = () => store.dispatch('startLoading')
+    const endLoading = () => store.dispatch('endLoading')
+    const setUser = (user) => store.dispatch('setUser', user)
+
+    const togglePasswordVisibility = (event) => {
       passwordVisibility(event)
-    },
-    async onSubmit(values, actions) {
+    }
+
+    const onSubmit = async (values, actions) => {
       try {
-        this.startLoading()
+        startLoading()
         // await axios.post('/api/registration/', { ...this.form })
         const response = await supabase.auth.signUp({
-          email: this.form.user.email,
-          password: this.form.user.password
+          email: form.value.user.email,
+          password: form.value.user.password
         })
-        this.form.user.surname = ''
-        this.form.user.name = ''
-        this.form.user.tel = ''
-        this.form.user.email = ''
-        this.form.user.password = ''
-        this.form.user.repeatPassword = ''
+        form.value.user.surname = ''
+        form.value.user.name = ''
+        form.value.user.tel = ''
+        form.value.user.email = ''
+        form.value.user.password = ''
+        form.value.user.repeatPassword = ''
         actions.resetForm()
-        this.setUser(response.data.user)
-        this.$router.push({ name: 'personal-account-view' })
-        this.endLoading()
+        setUser(response.data.user)
+        router.push({ name: 'personal-account-view' })
+        endLoading()
         if (response.error) throw Error
       } catch (error) {
         if (error.statusCode === 422) {
           actions.setErrors(error.data.errors)
         }
-        this.endLoading()
+        endLoading()
         console.error('Error fetching AuthSignUpPhysical:', error)
       }
+    }
+
+    return {
+      form,
+      schema,
+      isLoading,
+      togglePasswordVisibility,
+      onSubmit
     }
   }
 }
