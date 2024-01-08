@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { ref, toRefs } from 'vue'
 export default {
   name: 'UIAccordionItem',
   props: {
@@ -23,9 +24,16 @@ export default {
     }
   },
   emits: ['onAccordionItem'],
-  methods: {
-    onAccordionItem() {
-      this.$emit('onAccordionItem', [this.item, this.$refs.content])
+  setup(props, { emit }) {
+    const { item } = toRefs(props)
+    const content = ref(null)
+    const onAccordionItem = () => {
+      emit('onAccordionItem', [item.value, content.value])
+    }
+
+    return {
+      content,
+      onAccordionItem
     }
   }
 }
