@@ -33,13 +33,14 @@
 import AppLoading from '@/components/App/AppLoading'
 import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 export default {
   name: 'HeroView',
   components: { AppLoading },
   setup() {
     const store = useStore()
+    const route = useRoute()
     const router = useRouter()
     const breadcrumbs = ref([])
     const hero = ref({})
@@ -50,7 +51,7 @@ export default {
     const getHero = async () => {
       try {
         startLoading()
-        const currentHeroRouteName = router.currentRoute.value.params.heroView
+        const currentHeroRouteName = route.params.heroView
         const response = await axios.get(`/api/${currentHeroRouteName}/`)
         breadcrumbs.value = response.data.breadcrumbs
         hero.value = response.data.description
