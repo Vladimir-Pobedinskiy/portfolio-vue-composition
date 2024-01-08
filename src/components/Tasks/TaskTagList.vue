@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import { ref, toRefs } from 'vue'
 import TaskTagListItem from '@/components/Tasks/TaskTagListItem'
+import { ref, toRefs } from 'vue'
 export default {
   name: 'TaskTagList',
   components: { TaskTagListItem },

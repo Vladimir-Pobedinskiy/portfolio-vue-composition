@@ -30,10 +30,10 @@
 </template>
 
 <script>
+import AppLoading from '@/components/App/AppLoading'
 import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
-import AppLoading from '@/components/App/AppLoading'
 import axios from 'axios'
 export default {
   name: 'HeroView',

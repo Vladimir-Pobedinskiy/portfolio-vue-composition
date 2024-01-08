@@ -37,12 +37,12 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue'
-import { useStore } from 'vuex'
 import AppLoading from '@/components/App/AppLoading'
-import axios from 'axios'
 import TaskList from '@/components/Tasks/TaskList'
 import TaskTagList from '@/components/Tasks/TaskTagList'
+import { ref, computed } from 'vue'
+import { useStore } from 'vuex'
+import axios from 'axios'
 import { useVfm } from 'vue-final-modal'
 export default {
   name: 'TasksView',
