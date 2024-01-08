@@ -36,7 +36,7 @@ export default {
         }
       })
     }
-    getFirstTabBtn()
+    if (tabsNav.value) getFirstTabBtn()
 
     function onTabBtn(tabBtn) {
       tabsNav.value.forEach((tabBtn) => {

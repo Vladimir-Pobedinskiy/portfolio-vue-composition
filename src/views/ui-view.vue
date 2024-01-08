@@ -39,52 +39,54 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
 import AppLoading from '@/components/App/AppLoading'
-import axios from 'axios'
 import UIViewTabs from '@/components/UIView/UIViewTabs'
 import UIViewMarquee from '@/components/UIView/UIViewMarquee'
 import UIAccordionView from '@/components/UIView/UIViewAccordion'
+import { ref, computed } from 'vue'
+import { useStore } from 'vuex'
+import axios from 'axios'
+import { useVfm } from 'vue-final-modal'
 export default {
   name: 'UIView',
   components: { AppLoading, UIViewTabs, UIViewMarquee, UIAccordionView },
-  data() {
-    return {
-      breadcrumbs: [],
-      description: {},
-      tabs: {},
-      marquee: {},
-      accordion: {}
-    }
-  },
-  computed: {
-    ...mapGetters({
-      isLoading: 'isLoading'
-    })
-  },
-  created() {
-    this.getData()
-  },
-  methods: {
-    ...mapActions({
-      startLoading: 'startLoading',
-      endLoading: 'endLoading'
-    }),
-    async getData() {
+  setup() {
+    const store = useStore()
+    const vfm = useVfm()
+    const breadcrumbs = ref([])
+    const description = ref({})
+    const tabs = ref({})
+    const marquee = ref({})
+    const accordion = ref({})
+    const isLoading = computed(() => store.getters.isLoading)
+    const startLoading = () => store.dispatch('startLoading')
+    const endLoading = () => store.dispatch('endLoading')
+
+    const getData = async () => {
       try {
-        this.startLoading()
+        startLoading()
         const response = await axios.get('/api/ui/')
-        this.breadcrumbs = response.data.breadcrumbs
-        this.description = response.data.description
-        this.tabs = response.data.tabs
-        this.marquee = response.data.marquee
-        this.accordion = response.data.accordion
-        this.endLoading()
+        breadcrumbs.value = response.data.breadcrumbs
+        description.value = response.data.description
+        tabs.value = response.data.tabs
+        marquee.value = response.data.marquee
+        accordion.value = response.data.accordion
+        endLoading()
       } catch (error) {
-        this.endLoading()
-        this.$vfm.open('ModalError')
+        endLoading()
+        vfm.open('ModalError')
         console.error('Error fetching UIView', error)
       }
+    }
+    getData()
+
+    return {
+      breadcrumbs,
+      description,
+      tabs,
+      marquee,
+      accordion,
+      isLoading
     }
   }
 }

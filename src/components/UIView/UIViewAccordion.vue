@@ -37,7 +37,7 @@ export default {
     }
   },
   mounted() {
-    this.initAccordion()
+    if (this.accordionList) this.initAccordion()
   },
   methods: {
     initAccordion() {
