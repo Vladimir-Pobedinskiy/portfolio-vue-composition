@@ -27,7 +27,9 @@ export default {
         'Адаптивная верстка по принципу Mobile First'
       ]
     }
-    return { description }
+    return {
+      description
+    }
   }
 }
 </script>

@@ -4,6 +4,7 @@ import HomeView from '@/views/home-view'
 import HeroesView from '@/views/heroes-view'
 import HeroView from '@/views/hero-view'
 import TasksView from '@/views/tasks-view'
+import UIView from '@/views/ui-view'
 import NotFoundView from '@/views/not-found-view'
 
 const routes = [
@@ -26,6 +27,11 @@ const routes = [
     path: '/tasks',
     name: 'tasks-view',
     component: TasksView
+  },
+  {
+    path: '/ui',
+    name: 'ui-view',
+    component: UIView
   },
   {
     path: '/:catchAll(.*)*',

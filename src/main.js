@@ -7,6 +7,7 @@ import './assets/scss/main.scss'
 
 import { createVfm } from 'vue-final-modal'
 import 'vue-final-modal/style.css'
+import VueDOMPurifyHTML from 'vue-dompurify-html'
 
 // Глобальные компоненты
 import UIIcon from '@/components/UI/UIIcon'
@@ -22,6 +23,7 @@ if (app.config.globalProperties.$store) {
 
 const vfm = createVfm()
 app.use(vfm)
+app.use(VueDOMPurifyHTML)
 
 // Регистрируем глобальные компоненты
 app.component('UIIcon', UIIcon)

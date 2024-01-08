@@ -18,8 +18,10 @@
     "register-service-worker": "^1.7.2",
     "swiper": "^11.0.5",
     "vue": "^3.2.13",
+    "vue-dompurify-html": "^5.0.1",
     "vue-final-modal": "^4.5.3",
     "vue-router": "^4.0.3",
+    "vue3-marquee": "^4.1.0",
     "vuex": "^4.0.0",
     "vuex-persistedstate": "^4.1.0"
   },
