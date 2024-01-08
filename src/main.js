@@ -5,6 +5,7 @@ import { router } from './router'
 import { store } from './store'
 import './assets/scss/main.scss'
 
+import '@/plugins/iconify-vue'
 import { createVfm } from 'vue-final-modal'
 import 'vue-final-modal/style.css'
 import VueDOMPurifyHTML from 'vue-dompurify-html'
