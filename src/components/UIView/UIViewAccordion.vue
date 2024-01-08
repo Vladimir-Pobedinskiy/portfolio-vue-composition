@@ -19,6 +19,7 @@
 <script>
 import UIAccordion from '@/components/UI/Accordion/UIAccordion'
 import UIAccordionItem from '@/components/UI/Accordion/UIAccordionItem'
+import { ref, toRefs, onMounted } from 'vue'
 export default {
   name: 'UIViewAccordion',
   components: { UIAccordion, UIAccordionItem },
@@ -36,26 +37,30 @@ export default {
       required: false
     }
   },
-  mounted() {
-    if (this.accordionList) this.initAccordion()
-  },
-  methods: {
-    initAccordion() {
-      const accordionItemRefsContent = this.$refs.accordionItem
-      this.accordionList.forEach((elem, index) => {
+  setup(props) {
+    const { accordionList, isOnlyOneOpen, initItemOpen } = toRefs(props)
+    const accordionItem = ref(null)
+
+    const initAccordion = () => {
+      const accordionItemRefsContent = accordionItem.value
+      accordionList.value.forEach((elem, index) => {
         accordionItemRefsContent.forEach((itemRef, i) => {
-          if (index === i && i === Number(this.initItemOpen)) {
+          if (index === i && i === Number(initItemOpen.value)) {
             elem.selected = true
             itemRef.$refs.content.style.maxHeight = `${itemRef.$refs.content.scrollHeight}px`
-          } else if (index === i && this.initItemOpen === 'all') {
+          } else if (index === i && initItemOpen.value === 'all') {
             elem.selected = true
             itemRef.$refs.content.style.maxHeight = `${itemRef.$refs.content.scrollHeight}px`
           }
         })
       })
-    },
-    onAccordionItem([item, currentContentRef]) {
-      if (!this.isOnlyOneOpen) {
+    }
+    onMounted(() => {
+      if (accordionList.value) initAccordion()
+    })
+
+    const onAccordionItem = ([item, currentContentRef]) => {
+      if (!isOnlyOneOpen.value) {
         if (!item.selected) {
           item.selected = true
           currentContentRef.style.maxHeight = `${currentContentRef.scrollHeight}px`
@@ -64,9 +69,9 @@ export default {
           currentContentRef.style.maxHeight = null
         }
       } else {
-        const accordionItemRefsContent = this.$refs.accordionItem
+        const accordionItemRefsContent = accordionItem.value
         if (!item.selected) {
-          this.accordionList.forEach((elem) => {
+          accordionList.value.forEach((elem) => {
             elem.selected = false
           })
           accordionItemRefsContent.forEach((itemRef) => {
@@ -79,6 +84,11 @@ export default {
           currentContentRef.style.maxHeight = null
         }
       }
+    }
+
+    return {
+      accordionItem,
+      onAccordionItem
     }
   }
 }
