@@ -37,57 +37,51 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { ref, computed } from 'vue'
+import { useStore } from 'vuex'
 import AppLoading from '@/components/App/AppLoading'
 import axios from 'axios'
 import TaskList from '@/components/Tasks/TaskList'
 import TaskTagList from '@/components/Tasks/TaskTagList'
+import { useVfm } from 'vue-final-modal'
 export default {
   name: 'TasksView',
   components: { AppLoading, TaskList, TaskTagList },
-  data() {
-    return {
-      breadcrumbs: [],
-      description: {},
-      textareaValue: '',
-      tags: [
-        { title: 'home', selected: false },
-        { title: 'travel', selected: false },
-        { title: 'work', selected: false }
-      ],
-      selectedTags: []
-    }
-  },
-  computed: {
-    ...mapGetters({
-      isLoading: 'isLoading',
-      taskList: 'taskList'
-    })
-  },
-  created() {
-    this.getData()
-  },
-  methods: {
-    ...mapActions({
-      startLoading: 'startLoading',
-      endLoading: 'endLoading',
-      changeTaskList: 'changeTaskList',
-      deleteCurrentTask: 'deleteCurrentTask'
-    }),
-    async getData() {
+  setup() {
+    const store = useStore()
+    const vfm = useVfm()
+    const breadcrumbs = ref([])
+    const description = ref({})
+    const textareaValue = ref('')
+    const tags = ref([
+      { title: 'home', selected: false },
+      { title: 'travel', selected: false },
+      { title: 'work', selected: false }
+    ])
+    const selectedTags = ref([])
+    const isLoading = computed(() => store.getters.isLoading)
+    const taskList = computed(() => store.getters.taskList)
+    const startLoading = () => store.dispatch('startLoading')
+    const endLoading = () => store.dispatch('endLoading')
+    const changeTaskList = ([textareaValue, dateTask, selectedTags]) => store.dispatch('changeTaskList', [textareaValue, dateTask, selectedTags])
+    const deleteCurrentTask = (index) => store.dispatch('deleteCurrentTask', index)
+
+    const getData = async () => {
       try {
-        this.startLoading()
+        startLoading()
         const response = await axios.get('/api/tasks/')
-        this.description = response.data.description
-        this.breadcrumbs = response.data.breadcrumbs
-        this.endLoading()
+        description.value = response.data.description
+        breadcrumbs.value = response.data.breadcrumbs
+        endLoading()
       } catch (error) {
-        this.endLoading()
-        this.$vfm.open('ModalError')
+        endLoading()
+        vfm.open('ModalError')
         console.error('Error fetching UIView', error)
       }
-    },
-    dateTask() {
+    }
+    getData()
+
+    const dateTask = () => {
       const currentDate = new Date()
       const day = String(currentDate.getDate()).padStart(2, '0')
       const month = String(currentDate.getMonth() + 1).padStart(2, '0') // Месяцы начинаются с 0
@@ -97,21 +91,34 @@ export default {
       const seconds = String(currentDate.getSeconds()).padStart(2, '0')
 
       return `${day}.${month}.${year}, ${hours}:${minutes}:${seconds}`
-    },
-    handleSelectedTags(selectedTags) {
-      this.selectedTags = selectedTags
-    },
-    onSubmit() {
-      if (this.textareaValue.length) {
-        this.changeTaskList([this.textareaValue.trim(), this.dateTask(), this.selectedTags])
-        this.textareaValue = ''
-        this.selectedTags.length = 0
-        this.tags.forEach((item) => {
+    }
+    const handleSelectedTags = (selectedItems) => {
+      selectedTags.value = selectedItems
+    }
+    const onSubmit = () => {
+      if (textareaValue.value.length) {
+        changeTaskList([textareaValue.value.trim(), dateTask(), selectedTags.value])
+        textareaValue.value = ''
+        selectedTags.value.length = 0
+        tags.value.forEach((item) => {
           if (item.selected) {
             item.selected = false
           }
         })
       }
+    }
+
+    return {
+      breadcrumbs,
+      description,
+      textareaValue,
+      tags,
+      selectedTags,
+      isLoading,
+      taskList,
+      handleSelectedTags,
+      deleteCurrentTask,
+      onSubmit
     }
   }
 }
