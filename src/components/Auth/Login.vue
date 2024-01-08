@@ -68,12 +68,14 @@
 </template>
 
 <script>
+import AppLoading from '@/components/App/AppLoading'
 import { Form, Field } from 'vee-validate'
 import * as Yup from 'yup'
 import { passwordVisibility } from '@/utils/utils'
 import { IMaskDirective } from 'vue-imask'
-import { mapGetters, mapActions } from 'vuex'
-import AppLoading from '@/components/App/AppLoading'
+import { ref, computed } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 // import axios from 'axios'
 import { supabase } from '@/supabase'
 
@@ -83,56 +85,58 @@ export default {
   directives: {
     imask: IMaskDirective // Регистрируем директиву IMaskDirective - это директива, предоставляемая библиотекой vue-imask
   },
-  data() {
-    return {
-      form: {
-        user: {
-          email: '',
-          password: ''
-        }
-      },
-      schema: Yup.object().shape({
-        email: Yup.string().required('Email обязателен для заполнения').email('Неверный формат электронной почты'),
-        password: Yup.string().required('Пароль обязателен для заполнения').min(6, 'Пароль должен содержать минимум 6 символов')
-      })
-    }
-  },
-  computed: {
-    ...mapGetters({
-      isLoading: 'isLoading'
+  setup() {
+    const store = useStore()
+    const router = useRouter()
+    const form = ref({
+      user: {
+        email: '',
+        password: ''
+      }
     })
-  },
-  methods: {
-    ...mapActions({
-      startLoading: 'startLoading',
-      endLoading: 'endLoading',
-      setUser: 'setUser'
-    }),
-    togglePasswordVisibility(event) {
+    const schema = Yup.object().shape({
+      email: Yup.string().required('Email обязателен для заполнения').email('Неверный формат электронной почты'),
+      password: Yup.string().required('Пароль обязателен для заполнения').min(6, 'Пароль должен содержать минимум 6 символов')
+    })
+    const isLoading = computed(() => store.getters.isLoading)
+    const startLoading = () => store.dispatch('startLoading')
+    const endLoading = () => store.dispatch('endLoading')
+    const setUser = (user) => store.dispatch('setUser', user)
+
+    const togglePasswordVisibility = (event) => {
       passwordVisibility(event)
-    },
-    async onSubmit(values, actions) {
+    }
+
+    const onSubmit = async (values, actions) => {
       try {
-        this.startLoading()
+        startLoading()
         // await axios.post('/api/login/', { ...this.form })
         const response = await supabase.auth.signInWithPassword({
-          email: this.form.user.email,
-          password: this.form.user.password
+          email: form.value.user.email,
+          password: form.value.user.password
         })
-        this.form.user.email = ''
-        this.form.user.password = ''
+        form.value.user.email = ''
+        form.value.user.password = ''
         actions.resetForm()
-        this.setUser(response.data.user)
-        this.$router.push({ name: 'personal-account-view' })
-        this.endLoading()
+        setUser(response.data.user)
+        router.push({ name: 'personal-account-view' })
+        endLoading()
         if (response.error) throw Error
       } catch (error) {
         if (error.statusCode === 422) {
           actions.setErrors(error.data.errors)
         }
-        this.endLoading()
+        endLoading()
         console.error('Error fetching AuthLogin:', error)
       }
+    }
+
+    return {
+      form,
+      schema,
+      isLoading,
+      togglePasswordVisibility,
+      onSubmit
     }
   }
 }
