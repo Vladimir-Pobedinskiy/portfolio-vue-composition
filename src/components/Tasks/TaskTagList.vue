@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import { ref, toRefs } from 'vue'
 import TaskTagListItem from '@/components/Tasks/TaskTagListItem'
 export default {
   name: 'TaskTagList',
@@ -25,31 +26,34 @@ export default {
     }
   },
   emits: ['handleSelectedTags'],
-  data() {
-    return {
-      selectedTags: []
-    }
-  },
-  methods: {
-    handleSelectedTag(selectedTag) {
-      this.tags.forEach((item) => {
+  setup(props, { emit }) {
+    const { tags } = toRefs(props)
+    const selectedTags = ref([])
+
+    const handleSelectedTag = (selectedTag) => {
+      tags.value.forEach((item) => {
         if (item.title === selectedTag) {
           if (!item.selected) {
             item.selected = true
-            this.selectedTags.push({
+            selectedTags.value.push({
               title: selectedTag
             })
-            this.$emit('handleSelectedTags', this.selectedTags)
+            emit('handleSelectedTags', selectedTags.value)
           } else {
             item.selected = false
-            const selectedIndex = this.selectedTags.findIndex(tag => tag.title === selectedTag)
+            const selectedIndex = selectedTags.value.findIndex(tag => tag.title === selectedTag)
             if (selectedIndex !== -1) {
-              this.selectedTags.splice(selectedIndex, 1)
-              this.$emit('handleSelectedTags', this.selectedTags)
+              selectedTags.value.splice(selectedIndex, 1)
+              emit('handleSelectedTags', selectedTags.value)
             }
           }
         }
       })
+    }
+
+    return {
+      selectedTags,
+      handleSelectedTag
     }
   }
 }

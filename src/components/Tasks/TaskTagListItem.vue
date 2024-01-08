@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import { toRefs } from 'vue'
 export default {
   name: 'TaskTagListItem',
   props: {
@@ -22,9 +23,14 @@ export default {
     }
   },
   emits: ['handleSelectedTag'],
-  methods: {
-    handleSelectedTag() {
-      this.$emit('handleSelectedTag', this.tag.title)
+  setup(props, { emit }) {
+    const { tag } = toRefs(props)
+    const handleSelectedTag = () => {
+      emit('handleSelectedTag', tag.value.title)
+    }
+
+    return {
+      handleSelectedTag
     }
   }
 }
