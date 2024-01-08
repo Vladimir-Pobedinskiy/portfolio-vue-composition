@@ -4,6 +4,7 @@ import createPersistedState from 'vuex-persistedstate'
 import { navLinks } from './navLinks'
 import { menu } from './menu'
 import { tasks } from './tasks'
+import { auth } from './auth'
 
 export const store = createStore({
   state: {
@@ -31,7 +32,7 @@ export const store = createStore({
     }
   },
   modules: {
-    navLinks, menu, tasks
+    navLinks, menu, tasks, auth
   },
   plugins: [
     createPersistedState({
