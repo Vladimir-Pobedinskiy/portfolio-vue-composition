@@ -21,33 +21,35 @@
 
 <script>
 import { supabase } from '@/supabase'
-import { mapActions, mapGetters } from 'vuex'
+import { watch, computed } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 export default {
   name: 'PersonalAccountView',
-  computed: {
-    ...mapGetters({
-      user: 'user'
-    })
-  },
-  watch: {
-    user(value) {
+  setup() {
+    const store = useStore()
+    const router = useRouter()
+    const user = computed(() => store.getters.user)
+    const clearUser = () => store.dispatch('clearUser')
+
+    if (!user.value) {
+      router.push({ name: 'login-view' })
+    }
+
+    watch(user, (value) => {
       if (!value) {
-        this.$router.push({ name: 'login-view' })
+        router.push({ name: 'login-view' })
       }
-    }
-  },
-  created() {
-    if (!this.user) {
-      this.$router.push({ name: 'login-view' })
-    }
-  },
-  methods: {
-    ...mapActions({
-      clearUser: 'clearUser'
-    }),
-    async signOut() {
+    })
+
+    const signOut = async () => {
       await supabase.auth.signOut()
-      this.clearUser()
+      clearUser()
+    }
+
+    return {
+      user,
+      signOut
     }
   }
 }
