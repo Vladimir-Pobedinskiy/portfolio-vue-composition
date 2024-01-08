@@ -17,17 +17,19 @@ export default {
       required: true
     }
   },
-  data() {
+  setup() {
+    const marqueeSettings = {
+      duration: 40,
+      pauseOnHover: true,
+      direction: 'right',
+      loop: 0, // 0 - бесконечно
+      gradient: true,
+      gradientColor: [240, 250, 230],
+      gradientLength: '30px'
+    }
+
     return {
-      marqueeSettings: {
-        duration: 40,
-        pauseOnHover: true,
-        direction: 'right',
-        loop: 0, // 0 - бесконечно
-        gradient: true,
-        gradientColor: [240, 250, 230],
-        gradientLength: '30px'
-      }
+      marqueeSettings
     }
   }
 }
