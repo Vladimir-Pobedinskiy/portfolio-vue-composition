@@ -28,9 +28,10 @@
 </template>
 
 <script>
+import { ref, toRefs } from 'vue'
 import TaskTagList from '@/components/Tasks/TaskTagList'
 import ModalTags from '@/components/Modals/ModalTags'
-import { mapActions, mapGetters } from 'vuex'
+import { useStore } from 'vuex'
 export default {
   name: 'TaskListItem',
   components: { TaskTagList, ModalTags },
@@ -45,36 +46,37 @@ export default {
     }
   },
   emits: ['deleteCurrentTask'],
-  data() {
-    return {
-      inputHiddenFlag: true,
-      inputValue: ''
+  setup(props, { emit }) {
+    const { task, currentIndex } = toRefs(props)
+    const store = useStore()
+    const inputHiddenFlag = ref(true)
+    const inputValue = ref('')
+    const changeTaskItem = ([currentIndex, inputValue]) => store.dispatch('changeTaskItem', [currentIndex, inputValue])
+    const changeTaskItemTags = ([currentIndex, selectedTags]) => store.dispatch('changeTaskItemTags', [currentIndex, selectedTags])
+
+    const deleteCurrentTask = (index) => {
+      emit('deleteCurrentTask', index)
     }
-  },
-  computed: {
-    ...mapGetters({
-      taskList: 'taskList'
-    })
-  },
-  methods: {
-    ...mapActions({
-      changeTaskItem: 'changeTaskItem',
-      changeTaskItemTags: 'changeTaskItemTags'
-    }),
-    deleteCurrentTask(index) {
-      this.$emit('deleteCurrentTask', index)
-    },
-    openEditInput() {
-      this.inputHiddenFlag = false
-      this.inputValue = this.task.title
-    },
-    editCurrentTask() {
-      if (this.inputValue.trim().length) {
-        this.changeTaskItem([this.currentIndex, this.inputValue.trim()])
+    const openEditInput = () => {
+      inputHiddenFlag.value = false
+      inputValue.value = task.value.title
+    }
+    const editCurrentTask = () => {
+      if (inputValue.value.trim().length) {
+        changeTaskItem([currentIndex.value, inputValue.value.trim()])
       }
-    },
-    editSelectedTags(selectedTags) {
-      this.changeTaskItemTags([this.currentIndex, selectedTags])
+    }
+    const editSelectedTags = (selectedTags) => {
+      changeTaskItemTags([currentIndex.value, selectedTags])
+    }
+
+    return {
+      inputHiddenFlag,
+      inputValue,
+      deleteCurrentTask,
+      openEditInput,
+      editCurrentTask,
+      editSelectedTags
     }
   }
 }

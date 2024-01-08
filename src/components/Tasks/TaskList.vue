@@ -20,9 +20,13 @@ export default {
       required: true
     }
   },
-  methods: {
-    deleteCurrentTask(index) {
-      this.$emit('deleteCurrentTask', index)
+  setup(props, { emit }) {
+    const deleteCurrentTask = (index) => {
+      emit('deleteCurrentTask', index)
+    }
+
+    return {
+      deleteCurrentTask
     }
   }
 }
