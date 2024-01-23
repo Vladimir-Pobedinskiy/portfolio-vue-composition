@@ -125,7 +125,7 @@ export default {
         if (error.statusCode === 422) {
           actions.setErrors(error.data.errors)
         }
-        actions.setErrors({ email: ' ', password: ' ' })
+        actions.setErrors({ email: ' ', password: `${error.name}` })
         console.error('Error fetching AuthLogin:', error)
       } finally {
         endLoading()
