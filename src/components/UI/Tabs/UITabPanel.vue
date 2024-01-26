@@ -24,7 +24,7 @@ export default {
     const initFirstTab = ref(inject('initFirstTab'))
     const isActive = ref(false)
 
-    function getFirstPanel() {
+    const getFirstPanel = () => {
       if (initFirstTab.value === panelName.value) {
         isActive.value = true
       }

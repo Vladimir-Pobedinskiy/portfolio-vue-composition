@@ -22,13 +22,10 @@ module.exports = defineConfig({
   // использовать publicPath вместо изменения опции output.publicPath
   // По умолчанию: '/'
   publicPath: '/',
-
   // Настройка пути для выходных файлов
   outputDir: 'dist',
-
   // Каталог (относительно outputDir) для хранения сгенерированных статических ресурсов (js, css, img, fonts).
   assetsDir: 'assets',
-
   // Настройка директории для статических ресурсов (css, js, изображения и др.)
   // assetsDir: 'static',
 

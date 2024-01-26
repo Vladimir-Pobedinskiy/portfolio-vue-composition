@@ -26,7 +26,7 @@ export default {
     const tabBtnName = ref(null)
     const initFirstTab = ref(null)
 
-    function getFirstTabBtn() {
+    const getFirstTabBtn = () => {
       tabsNav.value.forEach((tabBtn, index) => {
         if (index === 0) {
           tabBtn.selected = true
@@ -38,7 +38,7 @@ export default {
     }
     if (tabsNav.value) getFirstTabBtn()
 
-    function onTabBtn(tabBtn) {
+    const onTabBtn = (tabBtn) => {
       tabsNav.value.forEach((tabBtn) => {
         tabBtn.selected = false
       })
