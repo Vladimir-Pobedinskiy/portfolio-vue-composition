@@ -1,6 +1,6 @@
 <template>
   <template v-if="isLoading">
-    <AppLoading :isLoading="isLoading" />
+    <AppLoading :is-loading="isLoading" />
   </template>
   <template v-else>
     <div class="container">
@@ -55,11 +55,11 @@ export default {
         const response = await axios.get(`/api/${currentHeroRouteName}/`)
         breadcrumbs.value = response.data.breadcrumbs
         hero.value = response.data.description
-        endLoading()
       } catch (error) {
-        endLoading()
         router.push({ name: 'not-found-view' })
         console.error('Error fetching hero:', error)
+      } finally {
+        endLoading()
       }
     }
     getHero()

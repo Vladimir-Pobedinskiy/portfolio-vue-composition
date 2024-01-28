@@ -1,6 +1,6 @@
 <template>
   <template v-if="isLoading">
-    <AppLoading :isLoading="isLoading" />
+    <AppLoading :is-loading="isLoading" />
   </template>
   <template v-else>
     <div class="heroes-view offset-page-br">
@@ -46,11 +46,11 @@ export default {
         breadcrumbs.value = response.data.breadcrumbs
         description.value = response.data.description
         heroList.value = response.data.heroList
-        endLoading()
       } catch (error) {
-        endLoading()
         vfm.open('ModalError')
         console.error('Error fetching heroes:', error)
+      } finally {
+        endLoading()
       }
     }
     getData()

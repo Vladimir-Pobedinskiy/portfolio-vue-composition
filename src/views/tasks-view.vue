@@ -1,6 +1,6 @@
 <template>
   <template v-if="isLoading">
-    <AppLoading :isLoading="isLoading" />
+    <AppLoading :is-loading="isLoading" />
   </template>
   <template v-else>
     <div class="tasks-view offset-page-br">

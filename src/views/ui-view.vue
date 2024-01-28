@@ -1,6 +1,6 @@
 <template>
   <template v-if="isLoading">
-    <AppLoading :isLoading="isLoading" />
+    <AppLoading :is-loading="isLoading" />
   </template>
   <template v-else>
     <div class="ui-view offset-page-br">
@@ -71,11 +71,11 @@ export default {
         tabs.value = response.data.tabs
         marquee.value = response.data.marquee
         accordion.value = response.data.accordion
-        endLoading()
       } catch (error) {
-        endLoading()
         vfm.open('ModalError')
         console.error('Error fetching UIView', error)
+      } finally {
+        endLoading()
       }
     }
     getData()

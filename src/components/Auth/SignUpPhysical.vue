@@ -1,6 +1,6 @@
 <template>
   <template v-if="isLoading">
-    <AppLoading :isLoading="isLoading" />
+    <AppLoading :is-loading="isLoading" />
   </template>
   <div class="sign-up">
     <Form

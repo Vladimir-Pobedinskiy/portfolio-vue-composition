@@ -6,6 +6,10 @@
         "url": "/"
       },
       {
+        "title": "Catalog",
+        "url": "/catalog"
+      },
+      {
         "title": "Heroes",
         "url": "/heroes"
       },
@@ -27,6 +31,74 @@
       }
     ]
   },
+  "catalog": {
+    "breadcrumbs": [
+      {
+        "title": "Главная",
+        "url": "/"
+      },
+      {
+        "title": "Каталог",
+        "url": "/catalog/"
+      }
+    ],
+    "description": {
+      "title": "В этом приложении реализовано:",
+      "descriptionList": [
+        "Каталог героев",
+        "Фильтрация товаров",
+        "Сортировка товаров",
+        "Пагинация"
+      ]
+    }
+  },
+  "catalog-products": [
+    {
+      "id": 1,
+      "productUrl": "#!",
+      "alias": "barbarian",
+      "title": "The Barbarian",
+      "imgUrl": "/img/hero/barbarian.png",
+      "level": 4,
+      "price": 1100
+    },
+    {
+      "id": 2,
+      "productUrl": "#!",
+      "alias": "archer",
+      "title": "The Archer",
+      "imgUrl": "/img/hero/archer.png",
+      "level": 5,
+      "price": 1200
+    },
+    {
+      "id": 3,
+      "productUrl": "#!",
+      "alias": "giant",
+      "title": "The Giant",
+      "imgUrl": "/img/hero/giant.png",
+      "level": 3,
+      "price": 1000
+    },
+    {
+      "id": 4,
+      "productUrl": "#!",
+      "alias": "goblin",
+      "title": "The Goblin",
+      "imgUrl": "/img/hero/goblin.png",
+      "level": 3,
+      "price": 1100
+    },
+    {
+      "id": 5,
+      "productUrl": "#!",
+      "alias": "wizard",
+      "title": "The Wizard",
+      "imgUrl": "/img/hero/wizard.png",
+      "level": 6,
+      "price": 1300
+    }
+  ],
   "heroes": {
     "breadcrumbs": [
       {

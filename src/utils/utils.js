@@ -47,3 +47,11 @@ export function passwordVisibility(event) {
     toggle.setAttribute('data-show', false)
   }
 }
+
+// priceFormatter
+export function priceFormatter(value) {
+  if (!value) return ''
+  const parts = value.toString().split('.')
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '\u00A0')
+  return `${parts.join(',')} ₽`
+}
