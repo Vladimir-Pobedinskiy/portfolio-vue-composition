@@ -7,7 +7,6 @@
       <div class="container">
         <UIBreadcrumbs :breadcrumbs="breadcrumbs" />
         <h1 class="catalog-page__title title h1">{{ description.title }}</h1>
-
         <ul class="description-list">
           <li class="description-item p1" v-for="(item, i) in description.descriptionList" :key="i">{{ item }}</li>
         </ul>
@@ -15,6 +14,9 @@
         <section class="catalog-page__content">
           <div class="catalog-page__content-top">
             <h2 class="catalog-page__content-title h2">Каталог героев</h2>
+            <div class="catalog-page__sort-wrapper sort-wrapper">
+              <CatalogSort :sort="sort" />
+            </div>
           </div>
           <div class="catalog-page__left-side"></div>
           <div class="catalog-page__right-side">
@@ -38,14 +40,19 @@ import { useStore } from 'vuex'
 import axios from 'axios'
 import { useVfm } from 'vue-final-modal'
 import CatalogFeed from '@/components/Catalog/Feed'
+import CatalogSort from '@/components/Catalog/Sort'
+import { parse, stringify } from 'qs'
+import { useRoute } from 'vue-router'
 
 export default {
   name: 'CatalogView',
-  components: { AppLoading, CatalogFeed },
+  components: { AppLoading, CatalogFeed, CatalogSort },
   setup() {
+    const route = useRoute()
     const store = useStore()
     const breadcrumbs = ref([])
     const description = ref({})
+    const sort = ref([])
     const products = ref([])
     const vfm = useVfm()
     const isLoadingLocal = ref(false)
@@ -56,7 +63,14 @@ export default {
     const getDataCatalogProducts = async () => {
       try {
         isLoadingLocal.value = true
-        const response = await axios.get('/api/catalog-products/')
+
+        const parsedQuery = parse(route.query, { comma: true })
+        const stringifiedParams = stringify(
+          { ...parsedQuery },
+          { arrayFormat: 'comma', encode: false }
+        )
+
+        const response = await axios.get(`/api/catalog-products/?${stringifiedParams}`)
         products.value = response.data
       } catch (error) {
         vfm.open('ModalError')
@@ -72,6 +86,7 @@ export default {
         const response = await axios.get('/api/catalog/')
         breadcrumbs.value = response.data.breadcrumbs
         description.value = response.data.description
+        sort.value = response.data.sort
       } catch (error) {
         vfm.open('ModalError')
         console.error('Error catalog-view:', error)
@@ -85,6 +100,7 @@ export default {
     return {
       breadcrumbs,
       description,
+      sort,
       products,
       isLoading,
       isLoadingLocal
@@ -100,6 +116,15 @@ export default {
   }
 
   &__content-top {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 32px;
+
+    @media (min-width:$tablet) {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
   }
 
   &__content-title {

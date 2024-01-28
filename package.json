@@ -16,6 +16,7 @@
     "core-js": "^3.8.3",
     "hammerjs": "^2.0.8",
     "path": "^0.12.7",
+    "qs": "^6.11.2",
     "register-service-worker": "^1.7.2",
     "swiper": "^11.0.5",
     "vee-validate": "^4.12.4",

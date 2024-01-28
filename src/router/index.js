@@ -72,6 +72,16 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  let path = to.path
+  // Удаляем лишние слеши, кроме первого
+  path = path.replace(/\/{2,}/g, '/')
+  // Добавляем слеш в конце, если его нет
+  if (!path.endsWith('/')) {
+    next({ path: path + '/', query: to.query, hash: to.hash })
+  } else {
+    next()
+  }
+
   if (window.scrollY !== 0) {
     window.scrollTo(0, 0)
   }

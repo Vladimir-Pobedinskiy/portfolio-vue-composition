@@ -50,7 +50,19 @@
         "Сортировка товаров",
         "Пагинация"
       ]
-    }
+    },
+    "sort": [
+      {
+        "title": "По возрастанию цены",
+        "value": "price",
+        "selected": false
+      },
+      {
+        "title": "По убыванию цены",
+        "value": "price&_order=desc",
+        "selected": false
+      }
+    ]
   },
   "catalog-products": [
     {
