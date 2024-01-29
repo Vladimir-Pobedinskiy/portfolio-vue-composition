@@ -8,7 +8,7 @@
         <span class="product-preview__title h3">{{ product.title }}</span>
         <div class="product-preview__price-wrapper">
           <span class="product-preview__lvl p1">level:{{ product.level}}</span>
-          <span class="product-preview__price p1">{{ priceFormatter(product.price) }}</span>
+          <span class="product-preview__price p1">{{ priceFormatter(product.cost) }}</span>
         </div>
       </div>
       <button

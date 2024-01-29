@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { toRefs, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 export default {
   name: 'CatalogSort',
@@ -24,17 +25,33 @@ export default {
       required: true
     }
   },
-  emits: ['onSort'],
+  emits: ['handleSort'],
   setup(props, { emit }) {
+    const { sort } = toRefs(props)
     const route = useRoute()
     const router = useRouter()
 
     const onSort = (item) => {
-      item.selected ? item.selected = false : item.selected = true
-      const query = Object.assign({}, route.query, { _sort: item.value })
+      sort.value.forEach((elem) => {
+        elem.selected = false
+      })
+      item.selected = !item.selected
+
+      const query = Object.assign(
+        {},
+        route.query,
+        {
+          _sort: item.field,
+          _order: item.order
+        }
+      )
       if (query.page) delete query.page
       router.push({ query })
     }
+
+    watch(route, () => {
+      emit('handleSort')
+    })
 
     return {
       onSort

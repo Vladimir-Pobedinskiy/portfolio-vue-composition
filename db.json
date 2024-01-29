@@ -54,12 +54,14 @@
     "sort": [
       {
         "title": "По возрастанию цены",
-        "value": "price",
+        "field": "cost",
+        "order": "asc",
         "selected": false
       },
       {
         "title": "По убыванию цены",
-        "value": "price&_order=desc",
+        "field": "cost",
+        "order": "desc",
         "selected": false
       }
     ]
@@ -72,7 +74,7 @@
       "title": "The Barbarian",
       "imgUrl": "/img/hero/barbarian.png",
       "level": 4,
-      "price": 1100
+      "cost": 1100
     },
     {
       "id": 2,
@@ -81,7 +83,7 @@
       "title": "The Archer",
       "imgUrl": "/img/hero/archer.png",
       "level": 5,
-      "price": 1200
+      "cost": 1200
     },
     {
       "id": 3,
@@ -90,7 +92,7 @@
       "title": "The Giant",
       "imgUrl": "/img/hero/giant.png",
       "level": 3,
-      "price": 1000
+      "cost": 1000
     },
     {
       "id": 4,
@@ -99,7 +101,7 @@
       "title": "The Goblin",
       "imgUrl": "/img/hero/goblin.png",
       "level": 3,
-      "price": 1100
+      "cost": 1150
     },
     {
       "id": 5,
@@ -108,7 +110,7 @@
       "title": "The Wizard",
       "imgUrl": "/img/hero/wizard.png",
       "level": 6,
-      "price": 1300
+      "cost": 1300
     }
   ],
   "heroes": {

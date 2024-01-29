@@ -15,7 +15,7 @@
           <div class="catalog-page__content-top">
             <h2 class="catalog-page__content-title h2">Каталог героев</h2>
             <div class="catalog-page__sort-wrapper sort-wrapper">
-              <CatalogSort :sort="sort" />
+              <CatalogSort :sort="sort" @handleSort="handleSort" />
             </div>
           </div>
           <div class="catalog-page__left-side"></div>
@@ -97,13 +97,18 @@ export default {
     }
     getDataCatalog()
 
+    const handleSort = () => {
+      getDataCatalogProducts()
+    }
+
     return {
       breadcrumbs,
       description,
       sort,
       products,
       isLoading,
-      isLoadingLocal
+      isLoadingLocal,
+      handleSort
     }
   }
 }
