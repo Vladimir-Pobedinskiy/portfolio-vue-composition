@@ -66,7 +66,7 @@
       "alias": "barbarian",
       "title": "The Barbarian",
       "imgUrl": "/img/hero/barbarian.png",
-      "level": 4,
+      "level": 3,
       "cost": 1100
     },
     {
@@ -75,7 +75,7 @@
       "alias": "archer",
       "title": "The Archer",
       "imgUrl": "/img/hero/archer.png",
-      "level": 5,
+      "level": 3,
       "cost": 1200
     },
     {
@@ -84,7 +84,7 @@
       "alias": "giant",
       "title": "The Giant",
       "imgUrl": "/img/hero/giant.png",
-      "level": 3,
+      "level": 2,
       "cost": 1000
     },
     {
@@ -93,7 +93,7 @@
       "alias": "goblin",
       "title": "The Goblin",
       "imgUrl": "/img/hero/goblin.png",
-      "level": 3,
+      "level": 2,
       "cost": 1150
     },
     {
@@ -108,28 +108,28 @@
     {
       "id": 6,
       "productUrl": "#!",
-      "alias": "barbarian",
-      "title": "The Barbarian",
-      "imgUrl": "/img/hero/barbarian.png",
+      "alias": "dragon",
+      "title": "The Dragon",
+      "imgUrl": "/img/hero/dragon.png",
       "level": 4,
       "cost": 2530
     },
     {
       "id": 7,
       "productUrl": "#!",
-      "alias": "archer",
-      "title": "The Archer",
-      "imgUrl": "/img/hero/archer.png",
+      "alias": "golem",
+      "title": "The Golem",
+      "imgUrl": "/img/hero/golem.png",
       "level": 5,
       "cost": 1700
     },
     {
       "id": 8,
       "productUrl": "#!",
-      "alias": "giant",
-      "title": "The Giant",
-      "imgUrl": "/img/hero/giant.png",
-      "level": 3,
+      "alias": "archer-queen",
+      "title": "The Archer queen",
+      "imgUrl": "/img/hero/archer-queen.png",
+      "level": 7,
       "cost": 1600
     }
   ],

@@ -76,7 +76,12 @@ router.beforeEach((to, from, next) => {
   // Удаляем лишние слэши, кроме первого
   path = path.replace(/\/{2,}/g, '/')
 
-  if (!path.endsWith('/')) {
+  if (to.path !== '/catalog' && !path.endsWith('/')) {
+    if (window.scrollY !== 0) {
+      window.scrollTo(0, 0)
+    }
+    next({ path: path + '/', query: to.query, hash: to.hash })
+  } else if (!path.endsWith('/')) {
     next({ path: path + '/', query: to.query, hash: to.hash })
   } else {
     next()
