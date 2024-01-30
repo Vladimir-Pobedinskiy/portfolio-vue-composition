@@ -30,10 +30,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
-
 export default {
   name: 'UIPagination',
-
   props: {
     pageTotal: {
       type: Number,

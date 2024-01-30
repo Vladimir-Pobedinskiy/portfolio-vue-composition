@@ -28,10 +28,10 @@
 </template>
 
 <script>
-import ModalTags from '@/components/Modals/ModalTags'
-import TaskTagList from '@/components/Tasks/TaskTagList'
 import { ref, toRefs } from 'vue'
 import { useStore } from 'vuex'
+import ModalTags from '@/components/Modals/ModalTags'
+import TaskTagList from '@/components/Tasks/TaskTagList'
 export default {
   name: 'TaskListItem',
   components: { TaskTagList, ModalTags },

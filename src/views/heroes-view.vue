@@ -19,12 +19,12 @@
 </template>
 
 <script>
-import AppLoading from '@/components/App/AppLoading'
-import HeroSlider from '@/components/Hero/HeroSlider'
 import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
 import axios from 'axios'
 import { useVfm } from 'vue-final-modal'
+import AppLoading from '@/components/App/AppLoading'
+import HeroSlider from '@/components/Hero/HeroSlider'
 
 export default {
   components: { AppLoading, HeroSlider },

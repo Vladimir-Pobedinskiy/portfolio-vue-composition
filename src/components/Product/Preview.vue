@@ -34,9 +34,9 @@
 </template>
 
 <script>
-import { priceFormatter } from '@/utils/utils'
 import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
+import { priceFormatter } from '@/utils/utils'
 export default {
   name: 'ProductPreview',
   props: {

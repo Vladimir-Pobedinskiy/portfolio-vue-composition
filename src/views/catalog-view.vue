@@ -34,16 +34,16 @@
 </template>
 
 <script>
-import AppLoading from '@/components/App/AppLoading'
 import { ref, computed, watch } from 'vue'
 import { useStore } from 'vuex'
 import axios from 'axios'
+import { parse, stringify } from 'qs'
+import { useRoute, useRouter } from 'vue-router'
 import { useVfm } from 'vue-final-modal'
+import AppLoading from '@/components/App/AppLoading'
 import CatalogFeed from '@/components/Catalog/Feed'
 import CatalogSort from '@/components/Catalog/Sort'
 import UIPagination from '@/components/UI/Pagination/Pagination'
-import { parse, stringify } from 'qs'
-import { useRoute, useRouter } from 'vue-router'
 
 export default {
   name: 'CatalogView',

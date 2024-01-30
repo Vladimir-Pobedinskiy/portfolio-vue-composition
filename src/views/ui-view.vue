@@ -39,14 +39,14 @@
 </template>
 
 <script>
-import AppLoading from '@/components/App/AppLoading'
-import UIViewTabs from '@/components/UIView/UIViewTabs'
-import UIViewMarquee from '@/components/UIView/UIViewMarquee'
-import UIAccordionView from '@/components/UIView/UIViewAccordion'
 import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
 import axios from 'axios'
 import { useVfm } from 'vue-final-modal'
+import AppLoading from '@/components/App/AppLoading'
+import UIViewTabs from '@/components/UIView/UIViewTabs'
+import UIViewMarquee from '@/components/UIView/UIViewMarquee'
+import UIAccordionView from '@/components/UIView/UIViewAccordion'
 export default {
   name: 'UIView',
   components: { AppLoading, UIViewTabs, UIViewMarquee, UIAccordionView },

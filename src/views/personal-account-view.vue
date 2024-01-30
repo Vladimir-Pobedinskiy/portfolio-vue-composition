@@ -20,10 +20,10 @@
 </template>
 
 <script>
-import { supabase } from '@/supabase'
 import { watch, computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import { supabase } from '@/supabase'
 export default {
   name: 'PersonalAccountView',
   setup() {

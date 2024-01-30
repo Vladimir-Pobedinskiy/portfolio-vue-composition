@@ -14,10 +14,8 @@
 </template>
 
 <script>
-
 import { Swiper } from 'swiper/vue'
 import 'swiper/css'
-
 export default {
   name: 'UISlider',
   components: { Swiper },

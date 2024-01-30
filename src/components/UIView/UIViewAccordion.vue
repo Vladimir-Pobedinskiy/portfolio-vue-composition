@@ -17,9 +17,9 @@
 </template>
 
 <script>
+import { ref, toRefs, onMounted } from 'vue'
 import UIAccordion from '@/components/UI/Accordion/UIAccordion'
 import UIAccordionItem from '@/components/UI/Accordion/UIAccordionItem'
-import { ref, toRefs, onMounted } from 'vue'
 export default {
   name: 'UIViewAccordion',
   components: { UIAccordion, UIAccordionItem },
