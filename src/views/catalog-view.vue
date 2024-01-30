@@ -6,14 +6,11 @@
     <div class="catalog-page offset-page-br">
       <div class="container">
         <UIBreadcrumbs :breadcrumbs="breadcrumbs" />
-        <h1 class="catalog-page__title title h1">{{ description.title }}</h1>
-        <ul class="description-list">
-          <li class="description-item p1" v-for="(item, i) in description.descriptionList" :key="i">{{ item }}</li>
-        </ul>
+        <h1 class="visually-hidden">Каталог</h1>
 
         <section class="catalog-page__content">
           <div class="catalog-page__content-top">
-            <h2 class="catalog-page__content-title h2">Каталог героев</h2>
+            <h2 class="catalog-page__content-title h1">Каталог героев</h2>
             <div class="catalog-page__sort-wrapper sort-wrapper">
               <CatalogSort :sort="sort" @handleSort="handleSort" />
             </div>
@@ -25,6 +22,9 @@
             </template>
             <template v-else>
               <CatalogFeed :products="products" />
+              <div v-if="pageTotal" class="pagination-wrapper">
+                <UIPagination :page-total="pageTotal" @more="onMore" />
+              </div>
             </template>
           </div>
         </section>
@@ -35,30 +35,40 @@
 
 <script>
 import AppLoading from '@/components/App/AppLoading'
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useStore } from 'vuex'
 import axios from 'axios'
 import { useVfm } from 'vue-final-modal'
 import CatalogFeed from '@/components/Catalog/Feed'
 import CatalogSort from '@/components/Catalog/Sort'
+import UIPagination from '@/components/UI/Pagination/Pagination'
 import { parse, stringify } from 'qs'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 export default {
   name: 'CatalogView',
-  components: { AppLoading, CatalogFeed, CatalogSort },
+  components: { AppLoading, CatalogFeed, CatalogSort, UIPagination },
   setup() {
     const route = useRoute()
+    const router = useRouter()
     const store = useStore()
     const breadcrumbs = ref([])
-    const description = ref({})
     const sort = ref([])
     const products = ref([])
+    const pageTotal = ref(null)
+    const isMore = ref(false)
     const vfm = useVfm()
     const isLoadingLocal = ref(false)
     const isLoading = computed(() => store.getters.isLoading)
     const startLoading = () => store.dispatch('startLoading')
     const endLoading = () => store.dispatch('endLoading')
+
+    watch(route, () => {
+      if (!isMore.value) {
+        document.body.scrollTop = 0
+        document.documentElement.scrollTop = 0
+      }
+    })
 
     const getDataCatalogProducts = async () => {
       try {
@@ -71,12 +81,19 @@ export default {
         )
 
         const response = await axios.get(`/api/catalog-products/?${stringifiedParams}`)
-        products.value = response.data
+        if (isMore.value) {
+          products.value.push(...response.data)
+        } else {
+          products.value = response.data
+        }
       } catch (error) {
         vfm.open('ModalError')
         console.error('Error fetching heroes:', error)
       } finally {
         isLoadingLocal.value = false
+        if (isMore.value) {
+          isMore.value = false
+        }
       }
     }
 
@@ -85,8 +102,8 @@ export default {
         startLoading()
         const response = await axios.get('/api/catalog/')
         breadcrumbs.value = response.data.breadcrumbs
-        description.value = response.data.description
         sort.value = response.data.sort
+        pageTotal.value = response.data.pageTotal
       } catch (error) {
         vfm.open('ModalError')
         console.error('Error catalog-view:', error)
@@ -101,14 +118,21 @@ export default {
       getDataCatalogProducts()
     }
 
+    const onMore = (n) => {
+      isMore.value = true
+      const query = Object.assign({}, route.query, { page: n })
+      router.push({ query })
+    }
+
     return {
       breadcrumbs,
-      description,
       sort,
       products,
+      pageTotal,
       isLoading,
       isLoadingLocal,
-      handleSort
+      handleSort,
+      onMore
     }
   }
 }
@@ -118,14 +142,16 @@ export default {
   .catalog-page {
 
   &__content {
+    margin-top: 40px;
   }
 
   &__content-top {
     display: flex;
     flex-direction: column;
-    margin-bottom: 32px;
+    margin-bottom: 48px;
 
     @media (min-width:$tablet) {
+      margin-bottom: 60px;
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
@@ -133,18 +159,21 @@ export default {
   }
 
   &__content-title {
-    padding: 32px 0 24px;
     text-transform: uppercase;
-
-    @media (min-width:$desktop) {
-      padding: 60px 0 40px;
-    }
   }
 
   &__left-side {
   }
 
   &__right-side {
+  }
+
+  .pagination-wrapper {
+    margin-top: 32px;
+
+    @media (min-width:$desktop) {
+      margin-top: 48px;
+    }
   }
 }
 </style>

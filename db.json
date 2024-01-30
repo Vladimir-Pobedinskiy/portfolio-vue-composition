@@ -42,15 +42,6 @@
         "url": "/catalog/"
       }
     ],
-    "description": {
-      "title": "В этом приложении реализовано:",
-      "descriptionList": [
-        "Каталог героев",
-        "Фильтрация товаров",
-        "Сортировка товаров",
-        "Пагинация"
-      ]
-    },
     "sort": [
       {
         "title": "По возрастанию цены",
@@ -64,7 +55,9 @@
         "order": "desc",
         "selected": false
       }
-    ]
+    ],
+    "pageTotal": 10,
+    "productTotal": 4
   },
   "catalog-products": [
     {
@@ -111,6 +104,33 @@
       "imgUrl": "/img/hero/wizard.png",
       "level": 6,
       "cost": 1300
+    },
+    {
+      "id": 6,
+      "productUrl": "#!",
+      "alias": "barbarian",
+      "title": "The Barbarian",
+      "imgUrl": "/img/hero/barbarian.png",
+      "level": 4,
+      "cost": 2530
+    },
+    {
+      "id": 7,
+      "productUrl": "#!",
+      "alias": "archer",
+      "title": "The Archer",
+      "imgUrl": "/img/hero/archer.png",
+      "level": 5,
+      "cost": 1700
+    },
+    {
+      "id": 8,
+      "productUrl": "#!",
+      "alias": "giant",
+      "title": "The Giant",
+      "imgUrl": "/img/hero/giant.png",
+      "level": 3,
+      "cost": 1600
     }
   ],
   "heroes": {
