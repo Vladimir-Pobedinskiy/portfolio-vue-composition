@@ -121,7 +121,6 @@ export default {
   &__btn.btn-orange {
     padding: 12px 26px;
     width: fit-content;
-
   }
 
   &__list {
@@ -133,7 +132,7 @@ export default {
       right: 0;
       display: flex;
       align-items: center;
-      padding: 16px 18px;
+      padding: 17px 18px;
       border-top: 1px solid $color-gray;
       border-bottom: 1px solid $color-gray;
     }

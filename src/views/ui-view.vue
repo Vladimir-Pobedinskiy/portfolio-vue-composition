@@ -30,7 +30,7 @@
       <section class="ui-view__accordion offset">
         <div class="container">
           <h2 class="ui-view__accordion-title section-title h2">{{ accordion.title }}</h2>
-          <UIAccordionView :accordion-list="accordion.accordionList" :is-only-one-open="true" init-item-open="0" />
+          <UIAccordionView :accordion-list="accordion.accordionList" />
         </div>
       </section>
 

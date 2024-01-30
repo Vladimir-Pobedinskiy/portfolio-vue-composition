@@ -1,6 +1,6 @@
 <template>
   <div ref="accordionItem" class="accordion-item" :class="{ 'active': item.selected }">
-    <div class="accordion-item__header h4" @click="onAccordionItem">
+    <div class="accordion-item__header h4" @click="onAccordionItem(item, $refs.content)">
       <slot name="header" />
       <div class="accordion-item__header-icon-wrapper">
         <UIIcon icon-name="mdi-close" class-name="accordion-item__header-icon icon-close" width="32px" height="32px" />
@@ -12,26 +12,81 @@
     </div>
   </div>
 </template>
-
 <script>
-import { ref, toRefs } from 'vue'
+/*eslint-disable*/
+import { ref, toRefs, onMounted } from 'vue'
 export default {
   name: 'UIAccordionItem',
   props: {
     item: {
       type: Object,
       required: true
+    },
+    accordionList: {
+      type: Array,
+      required: true
+    },
+    isOnlyOneOpen: {
+      type: Boolean,
+      default: true
+    },
+    initItemOpen: {
+      type: String,
+      required: true
     }
   },
-  emits: ['onAccordionItem'],
-  setup(props, { emit }) {
-    const { item } = toRefs(props)
+  setup(props) {
+    const { accordionList, isOnlyOneOpen, initItemOpen } = toRefs(props)
+    const accordionItem = ref(null)
     const content = ref(null)
-    const onAccordionItem = () => {
-      emit('onAccordionItem', [item.value, content.value])
+
+    const initAccordion = () => {
+      const accordionItemContents = accordionItem.value.parentElement.querySelectorAll('.accordion-item__content')
+      accordionList.value.forEach((elem, index) => {
+        accordionItemContents.forEach((el, i) => {
+          if (index === i && i === Number(initItemOpen.value)) {
+            elem.selected = true
+            el.style.maxHeight = `${el.scrollHeight}px`
+          } else if (index === i && initItemOpen.value === 'all') {
+            elem.selected = true
+            el.style.maxHeight = `${el.scrollHeight}px`
+          }
+        })
+      })
+    }
+    onMounted(() => {
+      if (accordionList.value) initAccordion()
+    })
+
+    const onAccordionItem = (item, accordionItemContent) => {
+      if (!isOnlyOneOpen.value) {
+        if (!item.selected) {
+          item.selected = true
+          accordionItemContent.style.maxHeight = `${accordionItemContent.scrollHeight}px`
+        } else {
+          item.selected = false
+          accordionItemContent.style.maxHeight = null
+        }
+      } else {
+        if (!item.selected) {
+          accordionList.value.forEach((elem) => {
+            elem.selected = false
+          })
+          const accordionItemContents = accordionItem.value.parentElement.querySelectorAll('.accordion-item__content')
+          accordionItemContents.forEach((elem) => {
+            elem.style.maxHeight = null
+          })
+          item.selected = true
+          accordionItemContent.style.maxHeight = `${accordionItemContent.scrollHeight}px`
+        } else {
+          item.selected = false
+          accordionItemContent.style.maxHeight = null
+        }
+      }
     }
 
     return {
+      accordionItem,
       content,
       onAccordionItem
     }
