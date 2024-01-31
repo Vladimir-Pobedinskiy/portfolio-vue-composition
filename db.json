@@ -90,6 +90,54 @@
             "name": "KombinirovannyjMetall"
           }
         ]
+      },
+      {
+        "title": "Форма",
+        "name": "form",
+        "options": [
+          {
+            "selected": false,
+            "disabled": false,
+            "title": "Круглые",
+            "value": "Kruglye",
+            "name": "Kruglye"
+          },
+          {
+            "selected": false,
+            "disabled": false,
+            "title": "Вогнутые",
+            "value": "Vognutye",
+            "name": "Vognutye"
+          },
+          {
+            "selected": false,
+            "disabled": false,
+            "title": "Выпуклые",
+            "value": "Vypuklye",
+            "name": "Vypuklye"
+          },
+          {
+            "selected": false,
+            "disabled": false,
+            "title": "Бочонок",
+            "value": "Bochonok",
+            "name": "Bochonok"
+          },
+          {
+            "selected": false,
+            "disabled": false,
+            "title": "Прямые",
+            "value": "Pryamye",
+            "name": "Pryamye"
+          },
+          {
+            "selected": false,
+            "disabled": false,
+            "title": "Кольца-шайбы",
+            "value": "KolcaShajby",
+            "name": "KolcaShajby"
+          }
+        ]
       }
     ],
     "sort": [

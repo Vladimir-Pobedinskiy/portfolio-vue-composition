@@ -3,7 +3,7 @@
     <div class="filters-title h4">{{ filters.title }}</div>
     <CatalogFiltersOption
       v-for="(option, j) in filters.options" :key="j"
-      class="{ 'option-wrapper"
+      class="option-wrapper"
       :option="option"
       :group-name="filters.name"
     />
