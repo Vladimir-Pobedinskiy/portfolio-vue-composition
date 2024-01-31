@@ -29,8 +29,5 @@ export default {
       grid-template-columns: repeat(3, 1fr);
     }
 
-    @media (min-width:$tablet-big) {
-      grid-template-columns: repeat(4, 1fr);
-    }
   }
 </style>

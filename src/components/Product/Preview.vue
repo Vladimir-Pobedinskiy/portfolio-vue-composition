@@ -7,7 +7,7 @@
       <div class="product-preview__body">
         <span class="product-preview__title h3">{{ product.title }}</span>
         <div class="product-preview__price-wrapper">
-          <span class="product-preview__lvl p1">level:{{ product.level}}</span>
+          <span class="product-preview__level p1">level:{{ product.level}}</span>
           <span class="product-preview__price p1">{{ priceFormatter(product.cost) }}</span>
         </div>
       </div>
@@ -84,7 +84,7 @@ export default {
     }
 
     @media (min-width:$desktop-big) {
-      height: 320px;
+      height: 290px;
     }
   }
 
@@ -108,9 +108,6 @@ export default {
     width: 100%;
     max-width: 205px;
     text-align: center;
-  }
-
-  &__lvl {
   }
 
   &__price {

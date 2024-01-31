@@ -15,17 +15,19 @@
               <CatalogSort :sort="sort" @handleSort="handleSort" />
             </div>
           </div>
-          <div class="catalog-page__left-side"></div>
-          <div class="catalog-page__right-side">
-            <template v-if="isLoadingLocal">
-              <AppLoading :is-loading-local="isLoadingLocal" />
-            </template>
-            <template v-else>
-              <CatalogFeed :products="products" />
-              <div v-if="pageTotal" class="pagination-wrapper">
-                <UIPagination :page-total="pageTotal" @more="onMore" />
-              </div>
-            </template>
+          <div class="catalog-page__content-inner">
+            <div class="catalog-page__left-side"></div>
+            <div class="catalog-page__right-side">
+              <template v-if="isLoadingLocal">
+                <AppLoading :is-loading-local="isLoadingLocal" />
+              </template>
+              <template v-else>
+                <CatalogFeed :products="products" />
+                <div v-if="pageTotal" class="pagination-wrapper">
+                  <UIPagination :page-total="pageTotal" @more="onMore" />
+                </div>
+              </template>
+            </div>
           </div>
         </section>
       </div>
@@ -158,14 +160,31 @@ export default {
     }
   }
 
+  &__content-inner {
+
+    @media (min-width:$desktop) {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-gap: 24px;
+    }
+  }
+
   &__content-title {
     text-transform: uppercase;
   }
 
   &__left-side {
+
+    @media (min-width:$desktop) {
+      grid-column: 1 / 4;
+    }
   }
 
   &__right-side {
+
+    @media (min-width:$desktop) {
+      grid-column: 4 / -1;
+    }
   }
 
   .pagination-wrapper {
