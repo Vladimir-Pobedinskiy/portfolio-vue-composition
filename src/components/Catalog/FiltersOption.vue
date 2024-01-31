@@ -75,6 +75,7 @@ export default {
 
 <style lang="scss">
 .control-label {
+  margin-bottom: 8px;
   padding-left: 32px;
   width: fit-content;
   display: flex;

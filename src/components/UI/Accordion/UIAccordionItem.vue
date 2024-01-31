@@ -114,7 +114,7 @@ export default {
     text-transform: uppercase;
 
     @media (min-width:$desktop) {
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       cursor: pointer;
     }
   }
