@@ -1,5 +1,5 @@
 <template>
-  <UIAccordion :is-only-one-open="true" init-item-open="0">
+  <UIAccordion key="faqAccordion" :is-only-one-open="true" init-item-open="0">
     <UIAccordionItem v-for="(item, i) in accordionList" :key="i">
       <template #header>
         <span class="accordion-item-title h4">{{ item.title }}</span>
