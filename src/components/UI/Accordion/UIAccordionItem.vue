@@ -3,7 +3,8 @@
     <div class="accordion-item__header h4" @click="onAccordionItem($refs.accordionItem, $refs.content)">
       <slot name="header" />
       <div class="accordion-item__header-icon-wrapper">
-        <UIIcon icon-name="mdi-close" class-name="accordion-item__header-icon icon-close" width="32px" height="32px" />
+        <UIIcon v-if="!isCaretIcon" icon-name="mdi-close" class-name="accordion-item__header-icon icon-close" width="32px" height="32px" />
+        <UIIcon v-else icon-name="mdi-chevron-up" class-name="accordion-item__header-icon-caret icon-close" width="44px" height="44px" />
       </div>
     </div>
 
@@ -19,6 +20,7 @@ export default {
   setup() {
     const isOnlyOneOpen = ref(inject('isOnlyOneOpen'))
     const initItemOpen = ref(inject('initItemOpen'))
+    const isCaretIcon = ref(inject('isCaretIcon'))
     const accordionItem = ref(null)
     const content = ref(null)
 
@@ -73,6 +75,7 @@ export default {
     return {
       accordionItem,
       content,
+      isCaretIcon,
       onAccordionItem
     }
   }
@@ -91,7 +94,12 @@ export default {
   }
 
   &.active {
-    .accordion-item__header-icon{
+    .accordion-item__header-icon {
+      transform: rotate(0);
+      transition: transform 0.4s ease;
+    }
+
+    .accordion-item__header-icon-caret {
       transform: rotate(0);
       transition: transform 0.4s ease;
     }
@@ -121,8 +129,18 @@ export default {
   }
 
   &__header-icon {
+    width: 32px;
+    height: 32px;
     transform: rotate(-45deg);
     transition: transform 0.4s ease;
   }
+
+  &__header-icon-caret {
+    width: 44px;
+    height: 44px;
+    transform: rotate(-180deg);
+    transition: transform 0.4s ease;
+  }
+
 }
 </style>

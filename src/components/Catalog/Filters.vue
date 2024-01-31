@@ -16,7 +16,7 @@
           </button>
         </div>
         <div class="catalog-filters__filters-inner">
-          <UIAccordion key="filtersAccordion" :is-only-one-open="false" init-item-open="all">
+          <UIAccordion key="filtersAccordion" :is-only-one-open="false" init-item-open="all" :isCaretIcon="true">
             <CatalogFiltersGroup v-for="(filtersGroup, i) in filters" :key="i" :filters="filtersGroup" />
           </UIAccordion>
         </div>
