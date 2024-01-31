@@ -7,7 +7,7 @@
       </button>
     </div>
 
-    <div ref="filters" class="catalog-filters__content" :class="{ 'active': isOpen === 'filters' }">
+    <div ref="filtersContent" class="catalog-filters__content" :class="{ 'active': isOpen === 'filters' && !isDesktop }">
       <div class="catalog-filters__content-inner">
         <div v-if="!isDesktop" class="catalog-filters__content-top">
           <p class="catalog-filters__content-title h4">Все фильтры</p>
@@ -15,12 +15,12 @@
             <UIIcon icon-name="mdi-close" class-name="icon-close" width="32px" height="32px" />
           </button>
         </div>
-        <!-- <div class="catalog-filters__filters-inner">
-          <CatalogFiltersGroup v-for="(filtersGroup, i) in filters" :key="i" :filters="filtersGroup" :name-page="namePage" />
-        </div> -->
+        <div class="catalog-filters__filters-inner">
+          <CatalogFiltersGroup v-for="(filtersGroup, i) in filters" :key="i" :filters="filtersGroup" />
+        </div>
       </div>
       <!-- <div class="catalog-filters__filters-btns-wrapper">
-        <CatalogFiltersButtons :products-amount="productsAmount" :name-page="namePage" />
+        <CatalogFiltersButtons :products-amount="productsAmount" />
       </div> -->
     </div>
   </div>
@@ -33,13 +33,15 @@ import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import { screens, scrollController } from '@/utils/utils'
 import Hammer from 'hammerjs'
+import CatalogFiltersGroup from '@/components/Catalog/FiltersGroup'
 export default {
   name: 'CatalogFilters',
+  components: { CatalogFiltersGroup },
   props: {
-    // filters: {
-    //   type: Array,
-    //   required: true
-    // },
+    filters: {
+      type: Array,
+      required: true
+    }
     // productsAmount: {
     //   type: Number,
     //   default: -1
@@ -47,7 +49,7 @@ export default {
   },
   setup() {
     const store = useStore()
-    const filters = ref(null)
+    const filtersContent = ref(null)
     const mc = ref(null)
     const isDesktop = ref(null)
     const isOpen = computed(() => store.getters.isOpen)
@@ -62,7 +64,7 @@ export default {
     // })
 
     const setupHammer = () => {
-      const hammer = new Hammer.Manager(filters.value)
+      const hammer = new Hammer.Manager(filtersContent.value)
       hammer.add(new Hammer.Swipe({ direction: Hammer.DIRECTION_HORIZONTAL }))
       hammer.on('swipeleft', () => {
         toggleState(isOpen.value)
@@ -97,7 +99,7 @@ export default {
 
     return {
       isOpen,
-      filters,
+      filtersContent,
       isDesktop,
       isDesktopHandler,
       toggleState

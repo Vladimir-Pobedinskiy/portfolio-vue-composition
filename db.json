@@ -42,6 +42,56 @@
         "url": "/catalog/"
       }
     ],
+    "filters": [
+      {
+        "title": "Металл",
+        "name": "metal",
+        "options": [
+          {
+            "selected": false,
+            "disabled": true,
+            "title": "Серебро",
+            "value": "Serebro",
+            "name": "Serebro"
+          },
+          {
+            "selected": false,
+            "disabled": false,
+            "title": "Белое золото",
+            "value": "BeloeZoloto",
+            "name": "BeloeZoloto"
+          },
+          {
+            "selected": false,
+            "disabled": false,
+            "title": "Красное золото",
+            "value": "KrasnoeZoloto",
+            "name": "KrasnoeZoloto"
+          },
+          {
+            "selected": false,
+            "disabled": false,
+            "title": "Комбинированное золото",
+            "value": "KombinirovannoeZoloto",
+            "name": "KombinirovannoeZoloto"
+          },
+          {
+            "selected": false,
+            "disabled": false,
+            "title": "Платина",
+            "value": "Platina",
+            "name": "Platina"
+          },
+          {
+            "selected": false,
+            "disabled": false,
+            "title": "Комбинированный металл",
+            "value": "KombinirovannyjMetall",
+            "name": "KombinirovannyjMetall"
+          }
+        ]
+      }
+    ],
     "sort": [
       {
         "title": "По возрастанию цены",
