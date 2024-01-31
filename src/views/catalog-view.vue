@@ -16,7 +16,9 @@
             </div>
           </div>
           <div class="catalog-page__content-inner">
-            <div class="catalog-page__left-side"></div>
+            <div class="catalog-page__left-side">
+              <CatalogFilters />
+            </div>
             <div class="catalog-page__right-side">
               <template v-if="isLoadingLocal">
                 <AppLoading :is-loading-local="isLoadingLocal" />
@@ -44,12 +46,13 @@ import { useRoute, useRouter } from 'vue-router'
 import { useVfm } from 'vue-final-modal'
 import AppLoading from '@/components/App/AppLoading'
 import CatalogFeed from '@/components/Catalog/Feed'
+import CatalogFilters from '@/components/Catalog/Filters'
 import CatalogSort from '@/components/Catalog/Sort'
 import UIPagination from '@/components/UI/Pagination/Pagination'
 
 export default {
   name: 'CatalogView',
-  components: { AppLoading, CatalogFeed, CatalogSort, UIPagination },
+  components: { AppLoading, CatalogFeed, CatalogFilters, CatalogSort, UIPagination },
   setup() {
     const route = useRoute()
     const router = useRouter()
@@ -161,11 +164,12 @@ export default {
   }
 
   &__content-inner {
+    display: grid;
+    grid-auto-columns: 100%;
+    grid-gap: 24px;
 
     @media (min-width:$desktop) {
-      display: grid;
       grid-template-columns: repeat(12, 1fr);
-      grid-gap: 24px;
     }
   }
 

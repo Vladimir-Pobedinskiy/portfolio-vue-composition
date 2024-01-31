@@ -12,7 +12,7 @@
     :hide-overlay="modalSettings.hideOverlay"
   >
     <div class="modal-inner">
-      <button class="modal-close-btn" @click="$vfm.closeAll" aria-label="Закрыть модальное окно">
+      <button class="modal-close-btn" aria-label="Закрыть модальное окно" @click="$vfm.closeAll">
         <UIIcon icon-name="mdi-close" class-name="icon-close" width="32px" height="32px" />
       </button>
       <div v-if="$slots.header" class="modal-header">

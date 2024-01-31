@@ -31,13 +31,11 @@ export default {
   setup() {
     const store = useStore()
     const route = useRoute()
-    const navLinks = computed(() => store.getters.navLinks)
-    const isOpen = computed(() => store.getters.isOpen)
     const navigation = ref(null)
     const mc = ref(null)
-    const toggleState = (value) => {
-      store.dispatch('toggleState', value)
-    }
+    const navLinks = computed(() => store.getters.navLinks)
+    const isOpen = computed(() => store.getters.isOpen)
+    const toggleState = (value) => { store.dispatch('toggleState', value) }
 
     watch(isOpen, (value) => {
       if (value === 'navigation') {
