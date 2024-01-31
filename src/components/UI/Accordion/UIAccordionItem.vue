@@ -129,15 +129,11 @@ export default {
   }
 
   &__header-icon {
-    width: 32px;
-    height: 32px;
     transform: rotate(-45deg);
     transition: transform 0.4s ease;
   }
 
-  &__header-icon-caret {
-    width: 44px;
-    height: 44px;
+  &__header-icon-caret.icon-close {
     transform: rotate(-180deg);
     transition: transform 0.4s ease;
   }
