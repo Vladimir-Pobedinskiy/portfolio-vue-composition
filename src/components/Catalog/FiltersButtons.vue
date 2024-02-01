@@ -2,7 +2,7 @@
   <div class="filters-buttons">
     <button
       v-if="isShowReset"
-      class="filters-buttons__btn-clear btn"
+      class="filters-buttons__btn-clear btn-secondary"
       type="button"
       :disabled="isLoading"
       @click="resetFilters"
@@ -11,7 +11,7 @@
     </button>
     <button
       v-if="!isDesktop"
-      class="filters-buttons__btn-show-more btn-secondary"
+      class="filters-buttons__btn-show-more btn"
       type="button"
       :disabled="isLoading"
       @click="toggleState(isOpen)"
@@ -27,7 +27,7 @@ import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
 import { screens, declOfNum } from '@/utils/utils'
 export default {
-  name: 'CatalogFiltersReset',
+  name: 'CatalogFiltersButtons',
   props: {
     productsAmount: {
       type: Number,
@@ -103,12 +103,12 @@ export default {
   display: flex;
   flex-direction: column;
 
-  &__btn-clear.btn {
+  &__btn-clear.btn-secondary{
     margin-bottom: 16px;
     width: 100%;
   }
 
-  &__btn-show-more.btn-secondary {
+  &__btn-show-more.btn {
     width: 100%;
   }
 }

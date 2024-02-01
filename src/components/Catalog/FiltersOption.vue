@@ -6,7 +6,6 @@
       class="control-input visually-hidden"
       :class="{'selected': option.selected}"
       type="checkbox"
-      name=""
       :disabled="isLoading || option.disabled"
     />
     <span class="control-icon-span">
@@ -17,7 +16,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { computed, toRefs } from 'vue'
+import { useStore } from 'vuex'
+import { useRoute, useRouter } from 'vue-router'
 import { parse, stringify } from 'qs'
 export default {
   name: 'CatalogFiltersOption',
@@ -31,43 +32,51 @@ export default {
       required: true
     }
   },
-  computed: {
-    ...mapGetters(['isLoading']),
-    model: {
+  setup(props) {
+    const { groupName, option } = toRefs(props)
+    const store = useStore()
+    const route = useRoute()
+    const router = useRouter()
+    const isLoading = computed(() => store.getters.isLoading)
+    const model = computed({
       get() {
-        return this.option.selected
+        return option.value.selected
       },
       set(newValue) {
-        let parsedQuery = parse(this.$route.query, { comma: true })
+        let parsedQuery = parse(route.query, { comma: true })
         let requestObject = null
         let optionsArray = null
 
         if (parsedQuery.page) delete parsedQuery.page
 
-        if (this.groupName in parsedQuery) {
-          if (typeof parsedQuery[this.groupName] === 'string') {
-            optionsArray = Array(parsedQuery[this.groupName])
+        if (groupName.value in parsedQuery) {
+          if (typeof parsedQuery[groupName.value] === 'string') {
+            optionsArray = Array(parsedQuery[groupName.value])
           } else {
-            optionsArray = parsedQuery[this.groupName]
+            optionsArray = parsedQuery[groupName.value]
           }
 
-          const index = optionsArray.indexOf(this.option.value)
+          const index = optionsArray.indexOf(option.value.value)
 
           if (index > -1) {
             optionsArray.splice(index, 1)
           } else {
-            optionsArray.push(this.option.value)
+            optionsArray.push(option.value.value)
           }
 
-          requestObject = { [this.groupName]: optionsArray }
+          requestObject = { [groupName.value]: optionsArray }
         } else if (newValue) {
-          requestObject = { [this.groupName]: [this.option.value] }
+          requestObject = { [groupName.value]: [option.value.value] }
         }
 
         parsedQuery = Object.assign({}, parsedQuery, { ...requestObject })
-
-        this.$router.push(`?${stringify(parsedQuery, { arrayFormat: 'comma', encode: false })}`)
+        router.push(`?${stringify(parsedQuery, { arrayFormat: 'comma', encode: false })}`)
       }
+    })
+
+    return {
+      isLoading,
+      model
     }
   }
 }
