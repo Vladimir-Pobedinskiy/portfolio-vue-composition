@@ -24,7 +24,7 @@
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
-import { screens, scrollController } from '@/utils/utils'
+import { screens } from '@/utils/utils'
 import Hammer from 'hammerjs'
 export default {
   name: 'AppHeader',
@@ -36,14 +36,6 @@ export default {
     const navLinks = computed(() => store.getters.navLinks)
     const isOpen = computed(() => store.getters.isOpen)
     const toggleState = (value) => { store.dispatch('toggleState', value) }
-
-    watch(isOpen, (value) => {
-      if (value === 'navigation') {
-        scrollController.disabledScroll()
-      } else {
-        scrollController.enabledScroll()
-      }
-    })
 
     watch(route, () => {
       if (isOpen.value === 'navigation') {

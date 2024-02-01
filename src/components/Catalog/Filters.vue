@@ -26,6 +26,7 @@
                 <CatalogRange :range="range" />
               </template>
             </UIAccordionItem>
+
             <CatalogFiltersGroup v-for="(filtersGroup, i) in filters" :key="i" :filters="filtersGroup" />
           </UIAccordion>
 
@@ -38,9 +39,9 @@
 </template>
 
 <script>
-import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useStore } from 'vuex'
-import { screens, scrollController } from '@/utils/utils'
+import { screens } from '@/utils/utils'
 import Hammer from 'hammerjs'
 import UIAccordion from '@/components/UI/Accordion/UIAccordion'
 import UIAccordionItem from '@/components/UI/Accordion/UIAccordionItem'
@@ -71,14 +72,6 @@ export default {
     const isDesktop = ref(null)
     const isOpen = computed(() => store.getters.isOpen)
     const toggleState = (value) => { store.dispatch('toggleState', value) }
-
-    watch(isOpen, (value) => {
-      if (value === 'filters') {
-        scrollController.disabledScroll()
-      } else {
-        scrollController.enabledScroll()
-      }
-    })
 
     const setupHammer = () => {
       const hammer = new Hammer.Manager(filtersContent.value)
