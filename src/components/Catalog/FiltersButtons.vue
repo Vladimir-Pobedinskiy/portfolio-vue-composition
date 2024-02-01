@@ -2,23 +2,30 @@
   <div class="filters-buttons">
     <button
       v-if="isShowReset"
-      class="filters-buttons__btn-clear btn-secondary"
+      class="filters-buttons__btn-clear btn"
       type="button"
       :disabled="isLoading"
       @click="resetFilters"
     >
       Очистить фильтры
     </button>
-    <button class="filters-buttons__btn-show-more btn" type="button" :disabled="isLoading" @click="toggleState(isOpen)">
+    <button
+      v-if="!isDesktop"
+      class="filters-buttons__btn-show-more btn-secondary"
+      type="button"
+      :disabled="isLoading"
+      @click="toggleState(isOpen)"
+    >
       {{ productsQuantity }}
     </button>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-import { declOfNum } from '@/utils/utils'
-
+import { ref, toRefs, computed, onMounted, onUnmounted } from 'vue'
+import { useStore } from 'vuex'
+import { useRoute, useRouter } from 'vue-router'
+import { screens, declOfNum } from '@/utils/utils'
 export default {
   name: 'CatalogFiltersReset',
   props: {
@@ -27,47 +34,65 @@ export default {
       default: -1
     }
   },
+  setup(props) {
+    const store = useStore()
+    const route = useRoute()
+    const router = useRouter()
+    const { productsAmount } = toRefs(props)
+    const isDesktop = ref(null)
+    const isLoading = computed(() => store.getters.isLoading)
+    const isOpen = computed(() => store.getters.isOpen)
+    const toggleState = (value) => { store.dispatch('toggleState', value) }
 
-  computed: {
-    ...mapGetters({
-      isLoading: 'isLoading',
-      isOpen: 'isOpen'
-    }),
-
-    isShowReset() {
-      const words = Object.keys(this.$route.query)
+    const isShowReset = computed(() => {
+      const words = Object.keys(route.query)
       const indexToDelete = words.findIndex((word) => word === 'page')
       if (indexToDelete > -1) {
         words.splice(indexToDelete, 1)
       }
-
       return words.length > 0
-    },
+    })
 
-    productsQuantity() {
-      if (this.productsAmount > 0) {
-        return `Показать ${this.productsAmount} ${declOfNum(
-          this.productsAmount,
-          ['товар', 'товара', 'товаров']
-        )}`
+    const productsQuantity = computed(() => {
+      if (productsAmount.value > 0) {
+        return `Показать ${productsAmount.value} ${declOfNum(productsAmount.value, ['товар', 'товара', 'товаров'])}`
       } else {
         return 'Нет товаров'
       }
-    }
-  },
-  methods: {
-    ...mapActions({
-      toggleState: 'toggleState'
-    }),
+    })
 
-    resetFilters() {
-      for (const key of Object.keys(this.$route.query)) {
+    const resetFilters = () => {
+      for (const key of Object.keys(route.query)) {
         if (key !== 'page') {
-          this.$router.push('')
+          router.push('')
         }
       }
     }
+
+    const isDesktopHandler = () => {
+      window.innerWidth >= parseInt(screens.desktop) ? isDesktop.value = true : isDesktop.value = false
+    }
+
+    onMounted(() => {
+      isDesktopHandler()
+      window.addEventListener('resize', isDesktopHandler)
+    })
+
+    onUnmounted(() => {
+      window.removeEventListener('resize', isDesktopHandler)
+    })
+
+    return {
+      isLoading,
+      isOpen,
+      toggleState,
+      isDesktop,
+      isShowReset,
+      productsQuantity,
+      resetFilters
+    }
   }
+
 }
 </script>
 
@@ -78,12 +103,12 @@ export default {
   display: flex;
   flex-direction: column;
 
-  &__btn-clear.btn-secondary {
+  &__btn-clear.btn {
     margin-bottom: 16px;
     width: 100%;
   }
 
-  &__btn-show-more.btn {
+  &__btn-show-more.btn-secondary {
     width: 100%;
   }
 }
