@@ -17,7 +17,7 @@
           </div>
           <div class="catalog-page__content-inner">
             <div class="catalog-page__left-side">
-              <CatalogFilters :filters="filters" />
+              <CatalogFilters :filters="filters" :products-amount="productTotal" />
             </div>
             <div class="catalog-page__right-side">
               <template v-if="isLoadingLocal">
@@ -67,6 +67,7 @@ export default {
     const sort = ref([])
     const products = ref([])
     const pageTotal = ref(null)
+    const productTotal = ref(null)
     const isMore = ref(false)
     const vfm = useVfm()
     const isLoadingLocal = ref(false)
@@ -116,6 +117,7 @@ export default {
         filters.value = response.data.filters
         sort.value = response.data.sort
         pageTotal.value = Number(response.data.pageTotal)
+        productTotal.value = Number(response.data.productTotal)
       } catch (error) {
         vfm.open('ModalError')
         console.error('Error catalog-view:', error)
@@ -142,6 +144,7 @@ export default {
       sort,
       products,
       pageTotal,
+      productTotal,
       isLoading,
       isLoadingLocal,
       handleSort,
@@ -155,7 +158,10 @@ export default {
   .catalog-page {
 
   &__content {
-    margin-top: 40px;
+
+    @media (min-width:$desktop) {
+      margin-top: 40px;
+    }
   }
 
   &__content-top {

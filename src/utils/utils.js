@@ -9,6 +9,16 @@ export const screens = {
   desktopBig: '1400px'
 }
 
+/* Склонение числительных */
+export function declOfNum(number, txt) {
+  const cases = [2, 0, 1, 1, 1, 2]
+  return txt[
+    number % 100 > 4 && number % 100 < 20
+      ? 2
+      : cases[number % 10 < 5 ? number % 10 : 5]
+  ]
+}
+
 /* Блокировка scroll */
 export const scrollController = {
   scrollPosition: 0,

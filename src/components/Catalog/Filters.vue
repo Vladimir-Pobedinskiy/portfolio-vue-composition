@@ -20,10 +20,10 @@
             <CatalogFiltersGroup v-for="(filtersGroup, i) in filters" :key="i" :filters="filtersGroup" />
           </UIAccordion>
         </div>
-      </div>
-      <!-- <div class="catalog-filters__filters-btns-wrapper">
+
         <CatalogFiltersButtons :products-amount="productsAmount" />
-      </div> -->
+
+      </div>
     </div>
   </div>
 </template>
@@ -37,18 +37,19 @@ import { screens, scrollController } from '@/utils/utils'
 import Hammer from 'hammerjs'
 import UIAccordion from '@/components/UI/Accordion/UIAccordion'
 import CatalogFiltersGroup from '@/components/Catalog/FiltersGroup'
+import CatalogFiltersButtons from '@/components/Catalog/FiltersButtons'
 export default {
   name: 'CatalogFilters',
-  components: { UIAccordion, CatalogFiltersGroup },
+  components: { UIAccordion, CatalogFiltersGroup, CatalogFiltersButtons },
   props: {
     filters: {
       type: Array,
       required: true
+    },
+    productsAmount: {
+      type: Number,
+      default: -1
     }
-    // productsAmount: {
-    //   type: Number,
-    //   default: -1
-    // }
   },
   setup() {
     const store = useStore()
@@ -58,13 +59,13 @@ export default {
     const isOpen = computed(() => store.getters.isOpen)
     const toggleState = (value) => { store.dispatch('toggleState', value) }
 
-    // watch(isOpen, (value) => {
-    //   if (value === 'filters') {
-    //     scrollController.disabledScroll()
-    //   } else {
-    //     scrollController.enabledScroll()
-    //   }
-    // })
+    watch(isOpen, (value) => {
+      if (value === 'filters') {
+        scrollController.disabledScroll()
+      } else {
+        scrollController.enabledScroll()
+      }
+    })
 
     const setupHammer = () => {
       const hammer = new Hammer.Manager(filtersContent.value)
@@ -131,7 +132,7 @@ export default {
       position: fixed;
       left: 0;
       top: 0;
-      padding: 98px 16px 120px;
+      padding: 98px 16px 80px;
       width: 100%;
       height: 100%;
       transform: translateX(-100%);
@@ -153,8 +154,7 @@ export default {
   }
 
   &__content-inner {
-    width: 100%;
-    height: 100%;
+
   }
 
   &__content-top {
@@ -162,6 +162,10 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+
+  &__filters-inner {
+
   }
 
   &__content-title {
