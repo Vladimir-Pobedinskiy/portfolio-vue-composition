@@ -17,6 +17,14 @@
         </div>
         <div class="catalog-filters__filters-inner">
           <UIAccordion key="filtersAccordion" :is-only-one-open="false" init-item-open="all" :is-caret-icon="true">
+            <UIAccordionItem>
+              <template #header>
+                <div class="filters-title h4">Цена</div>
+              </template>
+              <template #content>
+                <CatalogRange :range="range" />
+              </template>
+            </UIAccordionItem>
             <CatalogFiltersGroup v-for="(filtersGroup, i) in filters" :key="i" :filters="filtersGroup" />
           </UIAccordion>
         </div>
@@ -34,12 +42,18 @@ import { useStore } from 'vuex'
 import { screens, scrollController } from '@/utils/utils'
 import Hammer from 'hammerjs'
 import UIAccordion from '@/components/UI/Accordion/UIAccordion'
+import UIAccordionItem from '@/components/UI/Accordion/UIAccordionItem'
+import CatalogRange from '@/components/Catalog/Range'
 import CatalogFiltersGroup from '@/components/Catalog/FiltersGroup'
 import CatalogFiltersButtons from '@/components/Catalog/FiltersButtons'
 export default {
   name: 'CatalogFilters',
-  components: { UIAccordion, CatalogFiltersGroup, CatalogFiltersButtons },
+  components: { UIAccordion, UIAccordionItem, CatalogRange, CatalogFiltersGroup, CatalogFiltersButtons },
   props: {
+    range: {
+      type: Array,
+      required: true
+    },
     filters: {
       type: Array,
       required: true

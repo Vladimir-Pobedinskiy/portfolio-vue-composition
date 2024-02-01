@@ -17,7 +17,9 @@
           </div>
           <div class="catalog-page__content-inner">
             <div class="catalog-page__left-side">
-              <CatalogFilters :filters="filters" :products-amount="productTotal" />
+              <template v-if="filters.length > 0 && range.length > 0">
+                <CatalogFilters :range="range" :filters="filters" :products-amount="productTotal" />
+              </template>
             </div>
             <div class="catalog-page__right-side">
               <template v-if="isLoadingLocal">
@@ -63,6 +65,7 @@ export default {
     const router = useRouter()
     const store = useStore()
     const breadcrumbs = ref([])
+    const range = ref([])
     const filters = ref([])
     const sort = ref([])
     const products = ref([])
@@ -114,6 +117,7 @@ export default {
         startLoading()
         const response = await axios.get('/api/catalog/')
         breadcrumbs.value = response.data.breadcrumbs
+        range.value = response.data.range
         filters.value = response.data.filters
         sort.value = response.data.sort
         pageTotal.value = Number(response.data.pageTotal)
@@ -140,6 +144,7 @@ export default {
 
     return {
       breadcrumbs,
+      range,
       filters,
       sort,
       products,
