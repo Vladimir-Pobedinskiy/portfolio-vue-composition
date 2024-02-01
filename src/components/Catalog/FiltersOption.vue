@@ -66,7 +66,7 @@ export default {
 
         parsedQuery = Object.assign({}, parsedQuery, { ...requestObject })
 
-        this.$router.push(`?${stringify(parsedQuery, { arrayFormat: 'comma' })}`)
+        this.$router.push(`?${stringify(parsedQuery, { arrayFormat: 'comma', encode: false })}`)
       }
     }
   }

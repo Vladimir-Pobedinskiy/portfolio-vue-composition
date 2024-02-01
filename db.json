@@ -78,56 +78,56 @@
             "selected": false,
             "disabled": false,
             "title": "20см",
-            "value": "20см",
+            "value": "20",
             "name": "height"
           },
           {
             "selected": false,
             "disabled": false,
             "title": "30см",
-            "value": "30см",
+            "value": "30",
             "name": "height"
           },
           {
             "selected": false,
             "disabled": false,
             "title": "40см",
-            "value": "40см",
+            "value": "40",
             "name": "height"
           },
           {
             "selected": false,
             "disabled": false,
             "title": "50см",
-            "value": "50см",
+            "value": "50",
             "name": "height"
           },
           {
             "selected": false,
             "disabled": false,
             "title": "60см",
-            "value": "60см",
+            "value": "60",
             "name": "height"
           },
           {
             "selected": false,
             "disabled": false,
             "title": "70см",
-            "value": "70см",
+            "value": "70",
             "name": "height"
           },
           {
             "selected": false,
             "disabled": false,
             "title": "80см",
-            "value": "80см",
+            "value": "80",
             "name": "height"
           },
           {
             "selected": false,
             "disabled": false,
             "title": "90см",
-            "value": "90см",
+            "value": "90",
             "name": "height"
           }
         ]

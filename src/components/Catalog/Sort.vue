@@ -37,14 +37,7 @@ export default {
       })
       item.selected = !item.selected
 
-      const query = Object.assign(
-        {},
-        route.query,
-        {
-          _sort: item.field,
-          _order: item.order
-        }
-      )
+      const query = Object.assign({}, route.query, { _sort: item.field, _order: item.order })
       if (query.page) delete query.page
       router.push({ query })
     }
