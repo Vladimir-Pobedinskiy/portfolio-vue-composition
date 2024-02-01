@@ -16,6 +16,7 @@
           </button>
         </div>
         <div class="catalog-filters__filters-inner">
+
           <UIAccordion key="filtersAccordion" :is-only-one-open="false" init-item-open="all" :is-caret-icon="true">
             <UIAccordionItem>
               <template #header>
@@ -27,10 +28,10 @@
             </UIAccordionItem>
             <CatalogFiltersGroup v-for="(filtersGroup, i) in filters" :key="i" :filters="filtersGroup" />
           </UIAccordion>
+
+          <CatalogFiltersButtons :products-amount="productsAmount" />
+
         </div>
-
-        <CatalogFiltersButtons :products-amount="productsAmount" />
-
       </div>
     </div>
   </div>
