@@ -24,10 +24,15 @@
                 <AppLoading :is-loading-local="isLoadingLocal" />
               </template>
               <template v-else>
-                <CatalogFeed :products="products" />
-                <div v-if="pageTotal" class="pagination-wrapper">
-                  <UIPagination :page-total="pageTotal" @more="onMore" />
-                </div>
+                <template v-if="products.length > 0">
+                  <CatalogFeed :products="products" />
+                  <div v-if="pageTotal" class="pagination-wrapper">
+                    <UIPagination :page-total="pageTotal" @more="onMore" />
+                  </div>
+                </template>
+                <template v-else>
+                  <h2 class="h3">Товаров не найдено.</h2>
+                </template>
               </template>
             </div>
           </div>
@@ -110,7 +115,7 @@ export default {
         breadcrumbs.value = response.data.breadcrumbs
         filters.value = response.data.filters
         sort.value = response.data.sort
-        pageTotal.value = response.data.pageTotal
+        pageTotal.value = Number(response.data.pageTotal)
       } catch (error) {
         vfm.open('ModalError')
         console.error('Error catalog-view:', error)
