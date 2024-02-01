@@ -44,98 +44,152 @@
     ],
     "filters": [
       {
-        "title": "Металл",
-        "name": "metal",
+        "title": "Материал",
+        "name": "material",
         "options": [
           {
             "selected": false,
             "disabled": true,
-            "title": "Серебро",
-            "value": "Serebro",
-            "name": "Serebro"
+            "title": "Пластик",
+            "value": "plastic",
+            "name": "plastic"
           },
           {
             "selected": false,
             "disabled": false,
-            "title": "Белое золото",
-            "value": "BeloeZoloto",
-            "name": "BeloeZoloto"
+            "title": "Стекло",
+            "value": "glass",
+            "name": "glass"
           },
           {
             "selected": false,
             "disabled": false,
-            "title": "Красное золото",
-            "value": "KrasnoeZoloto",
-            "name": "KrasnoeZoloto"
-          },
-          {
-            "selected": false,
-            "disabled": false,
-            "title": "Комбинированное золото",
-            "value": "KombinirovannoeZoloto",
-            "name": "KombinirovannoeZoloto"
-          },
-          {
-            "selected": false,
-            "disabled": false,
-            "title": "Платина",
-            "value": "Platina",
-            "name": "Platina"
-          },
-          {
-            "selected": false,
-            "disabled": false,
-            "title": "Комбинированный металл",
-            "value": "KombinirovannyjMetall",
-            "name": "KombinirovannyjMetall"
+            "title": "Металл",
+            "value": "metal",
+            "name": "metal"
           }
         ]
       },
       {
-        "title": "Форма",
-        "name": "form",
+        "title": "Высота",
+        "name": "height",
         "options": [
           {
             "selected": false,
             "disabled": false,
-            "title": "Круглые",
-            "value": "Kruglye",
-            "name": "Kruglye"
+            "title": "20см",
+            "value": "20см",
+            "name": "height"
           },
           {
             "selected": false,
             "disabled": false,
-            "title": "Вогнутые",
-            "value": "Vognutye",
-            "name": "Vognutye"
+            "title": "30см",
+            "value": "30см",
+            "name": "height"
           },
           {
             "selected": false,
             "disabled": false,
-            "title": "Выпуклые",
-            "value": "Vypuklye",
-            "name": "Vypuklye"
+            "title": "40см",
+            "value": "40см",
+            "name": "height"
           },
           {
             "selected": false,
             "disabled": false,
-            "title": "Бочонок",
-            "value": "Bochonok",
-            "name": "Bochonok"
+            "title": "50см",
+            "value": "50см",
+            "name": "height"
           },
           {
             "selected": false,
             "disabled": false,
-            "title": "Прямые",
-            "value": "Pryamye",
-            "name": "Pryamye"
+            "title": "60см",
+            "value": "60см",
+            "name": "height"
           },
           {
             "selected": false,
             "disabled": false,
-            "title": "Кольца-шайбы",
-            "value": "KolcaShajby",
-            "name": "KolcaShajby"
+            "title": "70см",
+            "value": "70см",
+            "name": "height"
+          },
+          {
+            "selected": false,
+            "disabled": false,
+            "title": "80см",
+            "value": "80см",
+            "name": "height"
+          },
+          {
+            "selected": false,
+            "disabled": false,
+            "title": "90см",
+            "value": "90см",
+            "name": "height"
+          }
+        ]
+      },
+      {
+        "title": "Тип героя",
+        "name": "type",
+        "options": [
+          {
+            "selected": false,
+            "disabled": false,
+            "title": "Солдат",
+            "value": "soldier",
+            "name": "soldier"
+          },
+          {
+            "selected": false,
+            "disabled": false,
+            "title": "Стрелок",
+            "value": "shooter",
+            "name": "shooter"
+          },
+          {
+            "selected": false,
+            "disabled": false,
+            "title": "Волшебник",
+            "value": "wizard",
+            "name": "wizard"
+          },
+          {
+            "selected": false,
+            "disabled": false,
+            "title": "Дракон",
+            "value": "dragon",
+            "name": "dragon"
+          },
+          {
+            "selected": false,
+            "disabled": false,
+            "title": "Голем",
+            "value": "golem",
+            "name": "golem"
+          }
+        ]
+      },
+      {
+        "title": "Радиоуправление",
+        "name": "radio-control",
+        "options": [
+          {
+            "selected": false,
+            "disabled": false,
+            "title": "Да",
+            "value": "yes",
+            "name": "yes"
+          },
+          {
+            "selected": false,
+            "disabled": false,
+            "title": "Нет",
+            "value": "no",
+            "name": "no"
           }
         ]
       }

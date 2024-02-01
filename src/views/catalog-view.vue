@@ -156,7 +156,7 @@ export default {
   &__content-top {
     display: flex;
     flex-direction: column;
-    margin-bottom: 48px;
+    margin-bottom: 32px;
 
     @media (min-width:$tablet) {
       margin-bottom: 60px;
@@ -177,7 +177,12 @@ export default {
   }
 
   &__content-title {
+    margin-bottom: 12px;
     text-transform: uppercase;
+
+    @media (min-width:$tablet) {
+      margin-bottom: 0;
+    }
   }
 
   &__left-side {

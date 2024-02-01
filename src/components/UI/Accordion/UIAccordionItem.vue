@@ -119,6 +119,12 @@ export default {
     }
   }
 
+  &__header-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   &__content {
     display: flex;
     flex-direction: column;
@@ -134,6 +140,8 @@ export default {
   }
 
   &__header-icon-caret.icon-close {
+    width: 30px;
+    height: 30px;
     transform: rotate(-180deg);
     transition: transform 0.4s ease;
   }

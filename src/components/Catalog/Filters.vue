@@ -177,5 +177,14 @@ export default {
     z-index: 998;
   }
 
+  .accordion-item {
+    padding-top: 16px;
+    padding-bottom: 0;
+  }
+
+  .accordion-item__header {
+    margin-bottom: 16px;
+  }
+
 }
 </style>

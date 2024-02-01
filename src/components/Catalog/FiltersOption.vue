@@ -88,7 +88,9 @@ export default {
     cursor: default;
     opacity: 0.5;
   }
+
 }
+
 .control-input {
 
   &.selected+.control-icon-span {

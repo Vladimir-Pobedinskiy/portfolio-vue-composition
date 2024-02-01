@@ -30,4 +30,10 @@ export default {
 </script>
 
 <style lang="scss">
+.option-wrapper {
+
+  &:last-child {
+    margin-bottom: 20px;
+  }
+}
 </style>
