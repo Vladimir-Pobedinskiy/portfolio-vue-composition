@@ -10,7 +10,7 @@
       :disabled="isLoading || option.disabled"
     />
     <span class="control-icon-span">
-      <UIIcon icon-name="mdi-close" class-name="icon-close" width="8px" height="8px" />
+      <UIIcon class="control-icon-span-icon" icon-name="mdi-check" class-name="icon-close" width="8px" height="8px" />
     </span>
     <span class="control-title hf1">{{ option.title }}</span>
   </label>
@@ -114,6 +114,7 @@ export default {
   }
 
 }
+
 .control-icon-span {
   top: 50%;
   transform: translateY(-50%);
@@ -130,72 +131,10 @@ export default {
 
 .control-icon-span svg {
   transform: scale(0);
-  width: 12px;
-  height: 8px;
+  width: 16px;
+  height: 16px;
+  color: $color-white;
   transition: transform 0.3s ease;
-}
-
-// radio
-
-.radio-label {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-
-  @media (min-width:$desktop) {
-    flex: 0 1 18.5%;
-    margin: 1px;
-  }
-
-  @media (min-width:$desktop-big) {
-    flex: 0 1 16%;
-  }
-}
-.radio-input {
-
-  &:hover+.radio-checked-span {
-      border: 1px solid $color-gray-dark;
-      transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
-    }
-
-  &.selected+.radio-checked-span {
-    background-color: $color-gray-dark;
-    border-color: $color-gray-dark;
-    color: $color-white;
-    transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
-  }
-
-  &:disabled+.radio-checked-span {
-    opacity: 0.8;
-    background-color: $color-white;
-    border-color: $color-gray-disabled;
-    color: $color-gray-disabled;
-    cursor: default;
-    transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
-  }
-
-  &.disabled+.radio-checked-span {
-    opacity: 0.8;
-    background-color: $color-white;
-    border-color: $color-gray-disabled;
-    color: $color-gray-disabled;
-    cursor: default;
-    transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
-  }
-}
-.radio-checked-span {
-  display: inline-block;
-  padding: 14px 7px;
-  display: block;
-  width: 100%;
-  height: 100%;
-  color: $color-gray-dark;
-  background-color: $color-white;
-  border: 1px solid $color-gray-light;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 
 </style>

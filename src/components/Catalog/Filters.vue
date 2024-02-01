@@ -29,10 +29,8 @@
 </template>
 
 <script>
-/*eslint-disable*/
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useStore } from 'vuex'
-import { useRoute } from 'vue-router'
 import { screens, scrollController } from '@/utils/utils'
 import Hammer from 'hammerjs'
 import UIAccordion from '@/components/UI/Accordion/UIAccordion'
@@ -115,16 +113,6 @@ export default {
 <style lang="scss">
 .catalog-filters {
 
-  &__btn-wrapper {
-
-    @media (min-width:$tablet) {
-
-    }
-  }
-
-  &__btn {
-  }
-
   &__content {
     background-color: $color-white;
 
@@ -153,19 +141,11 @@ export default {
 
   }
 
-  &__content-inner {
-
-  }
-
   &__content-top {
     margin-bottom: 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-  }
-
-  &__filters-inner {
-
   }
 
   &__content-title {
