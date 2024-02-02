@@ -32,7 +32,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { ref, toRefs, computed, watch, onMounted } from 'vue'
+import { useStore } from 'vuex'
+import { useRoute, useRouter } from 'vue-router'
 import debounce from 'lodash.debounce'
 import noUiSlider from 'nouislider'
 import 'nouislider/dist/nouislider.css'
@@ -46,85 +48,93 @@ export default {
       required: true
     }
   },
-  data() {
-    return {
-      rangeSlider: null,
-      minRange: null,
-      maxRange: null,
-      slider: {
-        startMin: 25,
-        startMax: 75,
-        min: 0,
-        max: 100,
-        start: 40,
-        step: 1
+  setup(props) {
+    const { range } = toRefs(props)
+    const store = useStore()
+    const route = useRoute()
+    const router = useRouter()
+    const rangeNoUiSlider = ref(null)
+    const minRange = ref(null)
+    const maxRange = ref(null)
+    const slider = ref({
+      startMin: 25,
+      startMax: 75,
+      min: 0,
+      max: 100,
+      start: 40,
+      step: 1
+    })
+    const sliderRange = ref(null)
+    const isLoading = computed(() => store.getters.isLoading)
+
+    watch(isLoading, (value) => {
+      if (value) {
+        sliderRange.value.setAttribute('disabled', true)
+      } else {
+        sliderRange.value.removeAttribute('disabled')
       }
-    }
-  },
-  computed: {
-    ...mapGetters(['isLoading'])
-  },
-  watch: {
-    isLoading: {
-      handler(value) {
-        if (value) {
-          this.$refs.sliderRange.setAttribute('disabled', true)
-        } else {
-          this.$refs.sliderRange.removeAttribute('disabled')
-        }
-      }
-    },
-    range: {
-      handler(value) {
-        this.rangeSlider.destroy()
-        this.initSlider()
-      },
+    })
+    watch(range, (value) => {
+      rangeNoUiSlider.value.destroy()
+      initSlider()
+    }, {
       deep: true
-    }
-  },
-  mounted() {
-    this.initSlider()
-  },
-  methods: {
-    debouncedHandler: debounce(function () {
-      let parsedQuery = parse(this.$route.query, { comma: true })
-      const requestObject = { minPrice: this.minRange, maxPrice: this.maxRange }
+    })
+
+    const debouncedHandler = debounce(() => {
+      let parsedQuery = parse(route.query, { comma: true })
+      const requestObject = { minCost: minRange.value, maxCost: maxRange.value }
 
       if (parsedQuery.page) delete parsedQuery.page
 
       parsedQuery = Object.assign({}, parsedQuery, { ...requestObject })
 
-      this.$router.push(`?${stringify(parsedQuery, { arrayFormat: 'comma' })}`)
-    }, 100),
-    initSlider() {
-      this.slider.min = Number(this.range[0].minValue)
-      this.slider.max = Number(this.range[1].maxValue)
+      router.push(`?${stringify(parsedQuery, { arrayFormat: 'comma' })}`)
+    }, 100)
 
-      this.slider.startMin = Number(this.range[0].value)
-      this.slider.startMax = Number(this.range[1].value)
+    const initSlider = () => {
+      slider.value.min = Number(range.value[0].minValue)
+      slider.value.max = Number(range.value[1].maxValue)
 
-      this.rangeSlider = noUiSlider.create(this.$refs.sliderRange, {
-        start: [this.slider.startMin, this.slider.startMax],
-        step: this.slider.step,
+      slider.value.startMin = Number(range.value[0].value)
+      slider.value.startMax = Number(range.value[1].value)
+
+      rangeNoUiSlider.value = noUiSlider.create(sliderRange.value, {
+        start: [slider.value.startMin, slider.value.startMax],
+        step: slider.value.step,
         connect: true,
         range: {
-          min: this.slider.min,
-          max: this.slider.max
+          min: slider.value.min,
+          max: slider.value.max
         }
       })
 
-      this.$refs.sliderRange.noUiSlider.on('update', (values, handle) => {
-        this[handle ? 'maxRange' : 'minRange'] = parseInt(values[handle])
+      sliderRange.value.noUiSlider.on('update', (values, handle) => {
+        handle ? maxRange.value = parseInt(values[handle]) : minRange.value = parseInt(values[handle])
       })
 
-      this.rangeSlider.on('set', (values, handle) => {
-        this.debouncedHandler()
+      rangeNoUiSlider.value.on('set', (values, handle) => {
+        debouncedHandler()
       })
-    },
-    updateSlider() {
-      this.$refs.sliderRange.noUiSlider.set([this.minRange, this.maxRange])
+    }
+
+    const updateSlider = () => {
+      sliderRange.value.noUiSlider.set([minRange.value, maxRange.value])
+    }
+
+    onMounted(() => {
+      initSlider()
+    })
+
+    return {
+      isLoading,
+      sliderRange,
+      minRange,
+      maxRange,
+      updateSlider
     }
   }
+
 }
 </script>
 
