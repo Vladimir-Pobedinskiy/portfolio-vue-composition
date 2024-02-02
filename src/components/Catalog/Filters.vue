@@ -121,6 +121,10 @@ export default {
 <style lang="scss">
 .catalog-filters {
 
+  @media (min-width:$desktop) {
+    margin-top: 58px;
+  }
+
   &__content {
     background-color: $color-white;
 

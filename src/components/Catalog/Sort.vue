@@ -48,11 +48,11 @@ export default {
   }
 
   &__btn-list {
-    margin-bottom: 10px;
     min-width: 400px;
     width: 100%;
     display: flex;
     align-items: center;
+    justify-content: flex-end;
 
     @media (min-width:$tablet) {
       margin-bottom: 0;

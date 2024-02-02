@@ -11,9 +11,6 @@
         <section class="catalog-page__content">
           <div class="catalog-page__content-top">
             <h2 class="catalog-page__content-title h1">Каталог героев</h2>
-            <div class="catalog-page__sort-wrapper sort-wrapper">
-              <CatalogSort :sort="sort" />
-            </div>
           </div>
           <div class="catalog-page__content-inner">
             <div class="catalog-page__left-side">
@@ -26,6 +23,9 @@
                 <AppLoading :is-loading-local="isLoadingLocal" />
               </template>
               <template v-else>
+                <div class="catalog-page__sort-wrapper sort-wrapper">
+                  <CatalogSort :sort="sort" />
+                </div>
                 <template v-if="products.length > 0">
                   <CatalogFeed :products="products" />
                   <div v-if="pageTotal" class="pagination-wrapper">
@@ -169,13 +169,6 @@ export default {
     display: flex;
     flex-direction: column;
     margin-bottom: 32px;
-
-    @media (min-width:$tablet) {
-      margin-bottom: 60px;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-    }
   }
 
   &__content-inner {
@@ -209,6 +202,14 @@ export default {
     @media (min-width:$desktop) {
       grid-column: 4 / -1;
     }
+  }
+
+  &__sort-wrapper {
+    margin-bottom: 32px;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
   }
 
   .pagination-wrapper {

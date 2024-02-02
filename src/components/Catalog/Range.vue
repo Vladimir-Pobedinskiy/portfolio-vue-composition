@@ -157,7 +157,7 @@ export default {
   outline: transparent;
   border: 1px solid $color-gray-dark;
   border-radius: 4px;
-  background-color: $color-gray-lighter;
+  background-color: $color-white;
 }
 
 .slider-container {
