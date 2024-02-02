@@ -10,7 +10,14 @@
             </li>
           </ul>
         </div>
-        <UICart />
+        <ul class="nav-user">
+          <li class="nav-user__item">
+            <UIUser />
+          </li>
+          <li class="nav-user__item">
+            <UICart />
+          </li>
+        </ul>
         <button class="header__burger-btn burger-btn" :class="{ 'active': isOpen === 'navigation' }" type="button" @click="toggleState('navigation')">
           <span class="burger-btn__label">
             <span class="visually-hidden">открыть меню</span>
@@ -27,10 +34,11 @@ import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import { screens } from '@/utils/utils'
 import Hammer from 'hammerjs'
-import UICart from '@/components/UI/Cart/Cart'
+import UIUser from '@/components/UI/User/UIUser'
+import UICart from '@/components/UI/Cart/UICart'
 export default {
   name: 'AppHeader',
-  components: { UICart },
+  components: { UIUser, UICart },
   setup() {
     const store = useStore()
     const route = useRoute()
@@ -148,6 +156,29 @@ export default {
     }
   }
 
+}
+
+.nav-user {
+  display: none;
+
+  @media (min-width:$desktop) {
+    display: flex;
+    align-items: center;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @media (min-width:$desktop) {
+      margin-right: 24px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
 }
 
 </style>

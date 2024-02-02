@@ -1,5 +1,5 @@
 <template>
-  <router-link class="cart" to="/cart/" aria-label="Корзина">
+  <router-link class="ui-cart" to="/cart" aria-label="Корзина">
     <div class="count-container">
       <transition name="bounce" mode="out-in">
         <div v-if="count > 0" class="count marker">
@@ -7,7 +7,7 @@
         </div>
       </transition>
     </div>
-    <UIIcon icon-name="mdi-cart" class-name="cart__icon icon-close" width="32px" height="32px" />
+    <UIIcon icon-name="mdi-cart" class-name="ui-cart__icon" width="26px" height="26px" />
   </router-link>
 </template>
 
@@ -29,20 +29,20 @@ export default {
 
 <style lang="scss">
 
-.cart {
+.ui-cart {
   position: relative;
 
   &:hover {
-    .cart__icon {
+    .ui-cart__icon {
       color: $color-white;
       transition: color 0.3s ease;
     }
     color: $color-vue;
   }
 
-  .cart__icon {
-    width: 28px;
-    height: 28px;
+  .ui-cart__icon {
+    width: 26px;
+    height: 26px;
     transition: color 0.3s ease;
   }
 
@@ -50,10 +50,10 @@ export default {
     position: absolute;
     top: 0;
     right: 0;
-    transform: translate(calc(100% - 2.5px), calc(-100% + 5px));
+    transform: translate(calc(100% - 3px), calc(-100% + 5px));
 
     @media (min-width:$desktop) {
-      transform: translate(calc(100% - 2.5px), calc(-100% + 2.5px));
+      transform: translate(calc(100% - 3px), calc(-100% + 5px));
     }
   }
 
