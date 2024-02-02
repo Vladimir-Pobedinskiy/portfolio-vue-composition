@@ -46,12 +46,12 @@
       {
         "name": "min",
         "minValue": "0.00",
-        "value": "780.00"
+        "value": "800.00"
       },
       {
         "name": "max",
-        "maxValue": "283000.00",
-        "value": "283000.00"
+        "maxValue": "15000.00",
+        "value": "15000.00"
       }
     ],
     "filters": [

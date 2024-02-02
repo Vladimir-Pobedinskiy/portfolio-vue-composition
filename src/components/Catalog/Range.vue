@@ -1,7 +1,7 @@
 <template>
   <div class="range-wrapper">
     <div class="slider-container">
-      <div id="slider" ref="slider"></div>
+      <div id="slider-range" ref="sliderRange"></div>
     </div>
     <div class="label-wrapper">
       <label class="input-label">
@@ -68,9 +68,9 @@ export default {
     isLoading: {
       handler(value) {
         if (value) {
-          this.$refs.slider.setAttribute('disabled', true)
+          this.$refs.sliderRange.setAttribute('disabled', true)
         } else {
-          this.$refs.slider.removeAttribute('disabled')
+          this.$refs.sliderRange.removeAttribute('disabled')
         }
       }
     },
@@ -103,7 +103,7 @@ export default {
       this.slider.startMin = Number(this.range[0].value)
       this.slider.startMax = Number(this.range[1].value)
 
-      this.noUiSlider = noUiSlider.create(this.$refs.slider, {
+      this.noUiSlider = noUiSlider.create(this.$refs.sliderRange, {
         start: [this.slider.startMin, this.slider.startMax],
         step: this.slider.step,
         connect: true,
@@ -113,7 +113,7 @@ export default {
         }
       })
 
-      this.$refs.slider.noUiSlider.on('update', (values, handle) => {
+      this.$refs.sliderRange.noUiSlider.on('update', (values, handle) => {
         this[handle ? 'maxRange' : 'minRange'] = parseInt(values[handle])
       })
 
@@ -122,7 +122,7 @@ export default {
       })
     },
     updateSlider() {
-      this.$refs.slider.noUiSlider.set([this.minRange, this.maxRange])
+      this.$refs.sliderRange.noUiSlider.set([this.minRange, this.maxRange])
     }
   }
 }
@@ -158,31 +158,31 @@ export default {
   }
 }
 
-#slider.noUi-target {
+#slider-range.noUi-target {
   border: none;
   border-radius: 2px;
   background-color: $color-gray-light;
   box-shadow: none;
 }
 
-#slider[disabled='true'] {
+#slider-range[disabled='true'] {
   opacity: 0.6;
 }
 
-#slider.noUi-target.noUi-horizontal {
+#slider-range.noUi-target.noUi-horizontal {
   height: 2px;
 }
 
-#slider.noUi-target.noUi-horizontal .noUi-base {
+#slider-range.noUi-target.noUi-horizontal .noUi-base {
   width: calc(100% - 24px);
   transform: translateX(7px);
 }
 
-#slider.noUi-target.noUi-horizontal .noUi-connect {
+#slider-range.noUi-target.noUi-horizontal .noUi-connect {
   background-color: $color-gray-dark;
 }
 
-#slider .noUi-handle {
+#slider-range .noUi-handle {
   border: 2px solid $color-gray-dark;
   border-radius: 100%;
   width: 24px;
@@ -203,11 +203,11 @@ export default {
   outline: transparent;
 }
 
-#slider.noUi-horizontal .noUi-handle {
+#slider-range.noUi-horizontal .noUi-handle {
   top: -12px;
 }
 
-#slider.noUi-horizontal .noUi-handle.noUi-active {
+#slider-range.noUi-horizontal .noUi-handle.noUi-active {
   border-color: $color-gray-dark;
 }
 </style>
