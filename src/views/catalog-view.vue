@@ -55,7 +55,7 @@ import AppLoading from '@/components/App/AppLoading'
 import CatalogFeed from '@/components/Catalog/Feed'
 import CatalogFilters from '@/components/Catalog/Filters'
 import CatalogSort from '@/components/Catalog/Sort'
-import UIPagination from '@/components/UI/Pagination/Pagination'
+import UIPagination from '@/components/UI/Pagination/UIPagination'
 
 export default {
   name: 'CatalogView',
