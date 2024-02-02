@@ -5,6 +5,7 @@ import { navLinks } from './navLinks'
 import { menu } from './menu'
 import { tasks } from './tasks'
 import { auth } from './auth'
+import { cart } from './cart'
 
 export const store = createStore({
   state: {
@@ -32,12 +33,12 @@ export const store = createStore({
     }
   },
   modules: {
-    navLinks, menu, tasks, auth
+    navLinks, menu, tasks, auth, cart
   },
   plugins: [
     createPersistedState({
       // модули для сохранения в localStorage
-      paths: ['tasks']
+      paths: ['tasks', 'cart']
     })
   ]
 })

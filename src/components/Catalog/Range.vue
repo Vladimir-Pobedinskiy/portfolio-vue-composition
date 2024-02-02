@@ -74,7 +74,7 @@ export default {
         sliderRange.value.removeAttribute('disabled')
       }
     })
-    watch(range, (value) => {
+    watch(range, () => {
       rangeNoUiSlider.value.destroy()
       initSlider()
     }, {

@@ -10,6 +10,7 @@
             </li>
           </ul>
         </div>
+        <UICart />
         <button class="header__burger-btn burger-btn" :class="{ 'active': isOpen === 'navigation' }" type="button" @click="toggleState('navigation')">
           <span class="burger-btn__label">
             <span class="visually-hidden">открыть меню</span>
@@ -26,8 +27,10 @@ import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import { screens } from '@/utils/utils'
 import Hammer from 'hammerjs'
+import UICart from '@/components/UI/Cart/Cart'
 export default {
   name: 'AppHeader',
+  components: { UICart },
   setup() {
     const store = useStore()
     const route = useRoute()

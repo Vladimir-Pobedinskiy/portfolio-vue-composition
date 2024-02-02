@@ -53,12 +53,11 @@
   // btn-small
   &.btn-small {
     min-height: 42px;
-    padding: 10px 16px;
-    font-size: 14px;
+    padding: 8px 16px;
+    font-size: 16px;
     line-height: 1.4;
 
     @media (min-width:$mobile-big) {
-      font-size: 16px;
       line-height: 1.35;
     }
   }
@@ -173,8 +172,8 @@
   // btn-secondary-small
   &.btn-secondary-small {
     min-height: 42px;
-    padding: 10px 16px;
-    font-size: 14px;
+    padding: 8px 16px;
+    font-size: 16px;
     line-height: 1.4;
 
     svg {
@@ -190,6 +189,14 @@
   margin-top: auto;
   padding: 8px 16px;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-family: $font;
+  font-size: 16px;
+  font-weight: 450;
+  line-height: 1.4;
   border: 1px solid $color-orange;
   border-radius: 16px;
   background-color: $color-orange;

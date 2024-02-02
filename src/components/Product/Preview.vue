@@ -14,16 +14,16 @@
       <button
         v-if="!isInCart"
         key="off"
-        class="product-preview__link s4"
+        class="product-preview__link btn-orange s4"
         type="button"
-        @click.stop.prevent="isInCart = true"
+        @click.stop.prevent="addToCart"
       >
         Добавить в корзину
       </button>
       <button
         v-else
         key="on"
-        class="product-preview__link s4"
+        class="product-preview__link btn-secondary btn-secondary-small s4"
         type="button"
         @click.stop.prevent="$router.push('/cart/')"
       >
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue'
+import { toRefs, computed } from 'vue'
 import { useStore } from 'vuex'
 import { priceFormatter } from '@/utils/utils'
 export default {
@@ -45,15 +45,27 @@ export default {
       required: true
     }
   },
-  setup() {
+  setup(props) {
+    const { product } = toRefs(props)
     const store = useStore()
     const isLoading = computed(() => store.getters.isLoading)
-    const isInCart = ref(false)
+    const items = computed(() => store.getters.items)
+    const addItem = (product) => store.dispatch('addItem', product)
+
+    const isInCart = computed(() => {
+      const foundProduct = items.value.find((item) => item.id === product.value.id)
+      return Boolean(foundProduct)
+    })
+
+    const addToCart = () => {
+      addItem(product.value)
+    }
 
     return {
       isLoading,
       priceFormatter,
-      isInCart
+      isInCart,
+      addToCart
     }
   }
 }
@@ -116,25 +128,8 @@ export default {
   &__body {
   }
 
-  &__link {
-    display: block;
-    margin-top: auto;
-    padding: 8px 16px;
+  &__link.btn-secondary.btn-secondary-small {
     width: 100%;
-    border: 1px solid $color-orange;
-    border-radius: 16px;
-    background-color: $color-orange;
-    color: $color-white;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
-
-    @media (min-width:$desktop) {
-
-      &:hover {
-        border-color: $color-orange-hover;
-        background-color: $color-orange-hover;
-        transition: background-color 0.3s ease, border-color 0.3s ease;
-      }
-    }
   }
 }
 </style>
