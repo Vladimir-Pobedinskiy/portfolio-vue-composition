@@ -48,7 +48,7 @@ export default {
   },
   data() {
     return {
-      noUiSlider: null,
+      rangeSlider: null,
       minRange: null,
       maxRange: null,
       slider: {
@@ -76,7 +76,7 @@ export default {
     },
     range: {
       handler(value) {
-        this.noUiSlider.destroy()
+        this.rangeSlider.destroy()
         this.initSlider()
       },
       deep: true
@@ -103,7 +103,7 @@ export default {
       this.slider.startMin = Number(this.range[0].value)
       this.slider.startMax = Number(this.range[1].value)
 
-      this.noUiSlider = noUiSlider.create(this.$refs.sliderRange, {
+      this.rangeSlider = noUiSlider.create(this.$refs.sliderRange, {
         start: [this.slider.startMin, this.slider.startMax],
         step: this.slider.step,
         connect: true,
@@ -117,7 +117,7 @@ export default {
         this[handle ? 'maxRange' : 'minRange'] = parseInt(values[handle])
       })
 
-      this.noUiSlider.on('set', (values, handle) => {
+      this.rangeSlider.on('set', (values, handle) => {
         this.debouncedHandler()
       })
     },
