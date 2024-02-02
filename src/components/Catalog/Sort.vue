@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import { toRefs } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 export default {
   name: 'CatalogSort',
@@ -25,17 +24,11 @@ export default {
       required: true
     }
   },
-  setup(props, { emit }) {
-    const { sort } = toRefs(props)
+  setup() {
     const route = useRoute()
     const router = useRouter()
 
     const onSort = (item) => {
-      sort.value.forEach((elem) => {
-        elem.selected = false
-      })
-      item.selected = !item.selected
-
       const query = Object.assign({}, route.query, { _sort: item.field, _order: item.order })
       if (query.page) delete query.page
       router.push({ query })
