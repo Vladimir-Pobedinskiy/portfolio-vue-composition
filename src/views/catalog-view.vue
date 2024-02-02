@@ -12,7 +12,7 @@
           <div class="catalog-page__content-top">
             <h2 class="catalog-page__content-title h1">Каталог героев</h2>
             <div class="catalog-page__sort-wrapper sort-wrapper">
-              <CatalogSort :sort="sort" @handleSort="handleSort" />
+              <CatalogSort :sort="sort" />
             </div>
           </div>
           <div class="catalog-page__content-inner">
@@ -79,6 +79,7 @@ export default {
     const endLoading = () => store.dispatch('endLoading')
 
     watch(route, () => {
+      getDataCatalog()
       if (!isMore.value) {
         document.body.scrollTop = 0
         document.documentElement.scrollTop = 0
@@ -132,10 +133,6 @@ export default {
     }
     getDataCatalog()
 
-    const handleSort = () => {
-      getDataCatalogProducts()
-    }
-
     const onMore = (n) => {
       isMore.value = true
       const query = Object.assign({}, route.query, { page: n })
@@ -152,7 +149,6 @@ export default {
       productTotal,
       isLoading,
       isLoadingLocal,
-      handleSort,
       onMore
     }
   }
