@@ -28,6 +28,7 @@
             </UIAccordionItem>
 
             <CatalogFiltersGroup v-for="(filtersGroup, i) in filters" :key="i" :filters="filtersGroup" />
+
           </UIAccordion>
 
           <CatalogFiltersButtons :products-amount="productsAmount" />
@@ -42,7 +43,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useStore } from 'vuex'
 import { screens } from '@/utils/utils'
-import Hammer from 'hammerjs'
+import { hammerSwipe } from '@/composables/hammerSwipe'
 import UIAccordion from '@/components/UI/Accordion/UIAccordion'
 import UIAccordionItem from '@/components/UI/Accordion/UIAccordionItem'
 import CatalogRange from '@/components/Catalog/Range'
@@ -68,43 +69,23 @@ export default {
   setup() {
     const store = useStore()
     const filtersContent = ref(null)
-    const mc = ref(null)
     const isDesktop = ref(null)
     const isOpen = computed(() => store.getters.isOpen)
     const toggleState = (value) => { store.dispatch('toggleState', value) }
 
-    const setupHammer = () => {
-      const hammer = new Hammer.Manager(filtersContent.value)
-      hammer.add(new Hammer.Swipe({ direction: Hammer.DIRECTION_HORIZONTAL }))
-      hammer.on('swipeleft', () => {
-        toggleState(isOpen.value)
-      })
-      mc.value = hammer
-    }
-
-    const handleWindowResize = () => {
-      if (window.innerWidth >= parseInt(screens.desktop)) {
-        mc.value.set({ enable: false })
-      } else {
-        mc.value.set({ enable: true })
-      }
-    }
+    hammerSwipe(filtersContent, isOpen, screens.desktop)
 
     const isDesktopHandler = () => {
       window.innerWidth >= parseInt(screens.desktop) ? isDesktop.value = true : isDesktop.value = false
     }
 
     onMounted(() => {
-      setupHammer()
-      handleWindowResize()
       isDesktopHandler()
       window.addEventListener('resize', isDesktopHandler)
-      window.addEventListener('resize', handleWindowResize)
     })
 
     onUnmounted(() => {
       window.removeEventListener('resize', isDesktopHandler)
-      window.removeEventListener('resize', handleWindowResize)
     })
 
     return {

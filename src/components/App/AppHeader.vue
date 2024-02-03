@@ -18,7 +18,12 @@
             <UICart />
           </li>
         </ul>
-        <button class="header__burger-btn burger-btn" :class="{ 'active': isOpen === 'navigation' }" type="button" @click="toggleState('navigation')">
+        <button
+          class="header__burger-btn burger-btn"
+          :class="{ 'active': isOpen === 'navigation' }"
+          type="button"
+          @click="toggleState('navigation')"
+        >
           <span class="burger-btn__label">
             <span class="visually-hidden">открыть меню</span>
           </span>
@@ -29,11 +34,11 @@
 </template>
 
 <script>
-import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import { screens } from '@/utils/utils'
-import Hammer from 'hammerjs'
+import { hammerSwipe } from '@/composables/hammerSwipe'
 import UIUser from '@/components/UI/UIUser'
 import UICart from '@/components/UI/UICart'
 export default {
@@ -43,7 +48,7 @@ export default {
     const store = useStore()
     const route = useRoute()
     const navigation = ref(null)
-    const mc = ref(null)
+
     const navLinks = computed(() => store.getters.navLinks)
     const isOpen = computed(() => store.getters.isOpen)
     const toggleState = (value) => { store.dispatch('toggleState', value) }
@@ -54,32 +59,7 @@ export default {
       }
     })
 
-    const setupHammer = () => {
-      const hammer = new Hammer.Manager(navigation.value)
-      hammer.add(new Hammer.Swipe({ direction: Hammer.DIRECTION_HORIZONTAL }))
-      hammer.on('swipeleft', () => {
-        toggleState(isOpen.value)
-      })
-      mc.value = hammer
-    }
-
-    const handleWindowResize = () => {
-      if (window.innerWidth >= parseInt(screens.desktop)) {
-        mc.value.set({ enable: false })
-      } else {
-        mc.value.set({ enable: true })
-      }
-    }
-
-    onMounted(() => {
-      setupHammer()
-      handleWindowResize()
-      window.addEventListener('resize', handleWindowResize)
-    })
-
-    onUnmounted(() => {
-      window.removeEventListener('resize', handleWindowResize)
-    })
+    hammerSwipe(navigation, isOpen, screens.desktop)
 
     return {
       navLinks,
