@@ -12,7 +12,7 @@ import VueDOMPurifyHTML from 'vue-dompurify-html'
 
 // Глобальные компоненты
 import UIIcon from '@/components/UI/UIIcon'
-import UIBreadcrumbs from '@/components/UI/Breadcrumbs/UIBreadcrumbs'
+import UIBreadcrumbs from '@/components/UI/UIBreadcrumbs'
 
 const app = createApp(App)
 app.use(router)

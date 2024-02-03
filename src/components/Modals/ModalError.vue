@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import UIModal from '@/components/UI/Modal/UIModal'
+import UIModal from '@/components/UI/UIModal'
 export default {
   name: 'ModalError',
   components: { UIModal },

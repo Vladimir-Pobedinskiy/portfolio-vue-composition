@@ -30,7 +30,7 @@
 import { SwiperSlide } from 'swiper/vue'
 import { Navigation, Autoplay, Keyboard } from 'swiper/modules'
 import HeroCard from '@/components/Hero/HeroCard'
-import UISlider from '@/components/UI/Slider/UISlider'
+import UISlider from '@/components/UI/UISlider'
 
 export default {
   name: 'HeroSlider',

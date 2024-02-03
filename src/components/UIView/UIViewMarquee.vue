@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import UIMarquee from '@/components/UI/Marquee/UIMarquee'
+import UIMarquee from '@/components/UI/UIMarquee'
 export default {
   name: 'UIViewMarquee',
   components: { UIMarquee },

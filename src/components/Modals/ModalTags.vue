@@ -23,7 +23,7 @@
 
 <script>
 import { ref } from 'vue'
-import UIModal from '@/components/UI/Modal/UIModal'
+import UIModal from '@/components/UI/UIModal'
 import TaskTagList from '@/components/Tasks/TaskTagList'
 export default {
   name: 'ModalTags',

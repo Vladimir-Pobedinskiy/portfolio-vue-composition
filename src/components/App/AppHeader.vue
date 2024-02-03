@@ -34,8 +34,8 @@ import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import { screens } from '@/utils/utils'
 import Hammer from 'hammerjs'
-import UIUser from '@/components/UI/User/UIUser'
-import UICart from '@/components/UI/Cart/UICart'
+import UIUser from '@/components/UI/UIUser'
+import UICart from '@/components/UI/UICart'
 export default {
   name: 'AppHeader',
   components: { UIUser, UICart },

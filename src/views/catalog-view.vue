@@ -12,12 +12,14 @@
           <div class="catalog-page__content-top">
             <h2 class="catalog-page__content-title h1">Каталог героев</h2>
           </div>
+
           <div class="catalog-page__content-inner">
             <div class="catalog-page__left-side">
               <template v-if="filters.length > 0 && range.length > 0">
                 <CatalogFilters :range="range" :filters="filters" :products-amount="productTotal" />
               </template>
             </div>
+
             <div class="catalog-page__right-side">
               <template v-if="isLoadingLocal">
                 <AppLoading :is-loading-local="isLoadingLocal" />
@@ -55,7 +57,7 @@ import AppLoading from '@/components/App/AppLoading'
 import CatalogFeed from '@/components/Catalog/Feed'
 import CatalogFilters from '@/components/Catalog/Filters'
 import CatalogSort from '@/components/Catalog/Sort'
-import UIPagination from '@/components/UI/Pagination/UIPagination'
+import UIPagination from '@/components/UI/UIPagination'
 
 export default {
   name: 'CatalogView',
