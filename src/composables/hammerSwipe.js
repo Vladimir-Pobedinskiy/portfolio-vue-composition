@@ -1,3 +1,7 @@
+/*
+  Использование mc как сокращения для экземпляра Hammer Manager
+  является общепринятым в документации и примерах кода, связанных с Hammer.js
+*/
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useStore } from 'vuex'
 import Hammer from 'hammerjs'
