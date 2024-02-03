@@ -10,7 +10,8 @@
             </li>
           </ul>
         </div>
-        <ul class="nav-user">
+
+        <ul v-if="isDesktop" class="nav-user">
           <li class="nav-user__item">
             <UIUser />
           </li>
@@ -18,6 +19,7 @@
             <UICart />
           </li>
         </ul>
+
         <button
           class="header__burger-btn burger-btn"
           :class="{ 'active': isOpen === 'navigation' }"
@@ -38,6 +40,7 @@ import { ref, computed, watch } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import { screens } from '@/utils/utils'
+import { isDesktopHandler } from '@/composables/isDesktopHandler'
 import { hammerSwipe } from '@/composables/hammerSwipe'
 import UIUser from '@/components/UI/UIUser'
 import UICart from '@/components/UI/UICart'
@@ -48,7 +51,7 @@ export default {
     const store = useStore()
     const route = useRoute()
     const navigation = ref(null)
-
+    const { isDesktop } = isDesktopHandler()
     const navLinks = computed(() => store.getters.navLinks)
     const isOpen = computed(() => store.getters.isOpen)
     const toggleState = (value) => { store.dispatch('toggleState', value) }
@@ -63,6 +66,7 @@ export default {
 
     return {
       navLinks,
+      isDesktop,
       isOpen,
       toggleState,
       navigation
@@ -139,7 +143,6 @@ export default {
 }
 
 .nav-user {
-  display: none;
 
   @media (min-width:$desktop) {
     display: flex;

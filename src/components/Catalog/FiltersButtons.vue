@@ -22,10 +22,11 @@
 </template>
 
 <script>
-import { ref, toRefs, computed, onMounted, onUnmounted } from 'vue'
+import { toRefs, computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
-import { screens, declOfNum } from '@/utils/utils'
+import { isDesktopHandler } from '@/composables/isDesktopHandler'
+import { declOfNum } from '@/utils/utils'
 export default {
   name: 'CatalogFiltersButtons',
   props: {
@@ -39,7 +40,7 @@ export default {
     const route = useRoute()
     const router = useRouter()
     const { productsAmount } = toRefs(props)
-    const isDesktop = ref(null)
+    const { isDesktop } = isDesktopHandler()
     const isLoading = computed(() => store.getters.isLoading)
     const isOpen = computed(() => store.getters.isOpen)
     const toggleState = (value) => { store.dispatch('toggleState', value) }
@@ -68,19 +69,6 @@ export default {
         }
       }
     }
-
-    const isDesktopHandler = () => {
-      window.innerWidth >= parseInt(screens.desktop) ? isDesktop.value = true : isDesktop.value = false
-    }
-
-    onMounted(() => {
-      isDesktopHandler()
-      window.addEventListener('resize', isDesktopHandler)
-    })
-
-    onUnmounted(() => {
-      window.removeEventListener('resize', isDesktopHandler)
-    })
 
     return {
       isLoading,

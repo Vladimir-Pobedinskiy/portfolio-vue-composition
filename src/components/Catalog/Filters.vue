@@ -40,9 +40,10 @@
 </template>
 
 <script>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
 import { screens } from '@/utils/utils'
+import { isDesktopHandler } from '@/composables/isDesktopHandler'
 import { hammerSwipe } from '@/composables/hammerSwipe'
 import UIAccordion from '@/components/UI/Accordion/UIAccordion'
 import UIAccordionItem from '@/components/UI/Accordion/UIAccordionItem'
@@ -68,31 +69,17 @@ export default {
   },
   setup() {
     const store = useStore()
+    const { isDesktop } = isDesktopHandler()
     const filtersContent = ref(null)
-    const isDesktop = ref(null)
     const isOpen = computed(() => store.getters.isOpen)
     const toggleState = (value) => { store.dispatch('toggleState', value) }
 
     hammerSwipe(filtersContent, isOpen, screens.desktop)
 
-    const isDesktopHandler = () => {
-      window.innerWidth >= parseInt(screens.desktop) ? isDesktop.value = true : isDesktop.value = false
-    }
-
-    onMounted(() => {
-      isDesktopHandler()
-      window.addEventListener('resize', isDesktopHandler)
-    })
-
-    onUnmounted(() => {
-      window.removeEventListener('resize', isDesktopHandler)
-    })
-
     return {
       isOpen,
       filtersContent,
       isDesktop,
-      isDesktopHandler,
       toggleState
     }
   }
