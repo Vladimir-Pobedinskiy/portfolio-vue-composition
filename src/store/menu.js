@@ -1,4 +1,3 @@
-import { scrollController } from '@/utils/utils'
 export const menu = {
   state: {
     isOpen: null
@@ -6,17 +5,21 @@ export const menu = {
   mutations: {
     TOGGLE_STATE(state, payload) {
       if (state.isOpen === payload) {
-        scrollController.enabledScroll()
         state.isOpen = null
       } else {
-        scrollController.disabledScroll()
         state.isOpen = payload
       }
+    },
+    CLOSE_MENU(state) {
+      state.isOpen = null
     }
   },
   actions: {
     toggleState({ commit }, payload) {
       commit('TOGGLE_STATE', payload)
+    },
+    closeMenu({ commit }) {
+      commit('CLOSE_MENU')
     }
   },
   getters: {
