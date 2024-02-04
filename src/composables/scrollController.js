@@ -1,41 +1,23 @@
-import { screens } from '@/utils/utils'
-
-export function scrollController(closeMenuUsingEsc) {
-  let scrollPosition = 0
-  let paddingOffset = '0px'
-
-  const isDesktopSmall = () => window.innerWidth >= parseInt(screens.desktopSmall)
-
-  const handleEsc = (event) => {
-    if (event.key === 'Escape' && isDesktopSmall()) {
-      closeMenuUsingEsc()
-      enableScroll()
-    }
-  }
-
-  const disableScroll = () => {
-    scrollPosition = window.scrollY
-    paddingOffset = window.innerWidth - document.documentElement.clientWidth
-
+export const scrollController = {
+  scrollPosition: 0,
+  paddingOffset: 0,
+  disableScroll() {
+    scrollController.scrollPosition = window.scrollY
+    scrollController.paddingOffset = window.innerWidth - document.documentElement.clientWidth
+    document.body.classList.add('lock')
     document.body.style.cssText = `
-      position: fixed;
-      padding-right: ${paddingOffset}px;
-      top: -${scrollPosition}px;
-      left: 0;
-      width: 100%;
-      overflow: hidden;
+      top: -${scrollController.scrollPosition}px;
+      padding-right: ${scrollController.paddingOffset}px;
     `
-    window.addEventListener('keydown', handleEsc)
-  }
-
-  const enableScroll = () => {
-    document.body.style.cssText = ''
+  },
+  enableScroll() {
+    document.body.classList.remove('lock')
+    document.body.style.cssText = `
+      padding-right: '0px';
+    `
     window.scroll({
-      top: scrollPosition,
-      left: 0
+      top: scrollController.scrollPosition
     })
-    window.removeEventListener('keydown', handleEsc)
   }
 
-  return { disableScroll, enableScroll }
 }

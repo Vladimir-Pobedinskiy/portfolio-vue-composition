@@ -40,10 +40,9 @@
 </template>
 
 <script>
-import { ref, computed, watch } from 'vue'
+import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
 import { screens } from '@/utils/utils'
-import { scrollController } from '@/composables/scrollController'
 import { isDesktopHandler } from '@/composables/isDesktopHandler'
 import { hammerSwipe } from '@/composables/hammerSwipe'
 import UIAccordion from '@/components/UI/Accordion/UIAccordion'
@@ -74,17 +73,6 @@ export default {
     const filtersContent = ref(null)
     const isOpen = computed(() => store.getters.isOpen)
     const toggleState = (value) => { store.dispatch('toggleState', value) }
-
-    const closeMenuUsingEsc = () => store.dispatch('closeMenu')
-    const { disableScroll, enableScroll } = scrollController(closeMenuUsingEsc)
-
-    watch(isOpen, (value) => {
-      if (value === 'filters') {
-        disableScroll()
-      } else {
-        enableScroll()
-      }
-    })
 
     hammerSwipe(filtersContent, isOpen, screens.desktop)
 

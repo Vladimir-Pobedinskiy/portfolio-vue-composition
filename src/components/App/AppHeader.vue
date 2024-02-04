@@ -40,7 +40,6 @@ import { ref, computed, watch } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import { screens } from '@/utils/utils'
-import { scrollController } from '@/composables/scrollController'
 import { isDesktopHandler } from '@/composables/isDesktopHandler'
 import { hammerSwipe } from '@/composables/hammerSwipe'
 import UIUser from '@/components/UI/UIUser'
@@ -57,19 +56,9 @@ export default {
     const isOpen = computed(() => store.getters.isOpen)
     const toggleState = (value) => { store.dispatch('toggleState', value) }
 
-    const closeMenuUsingEsc = () => store.dispatch('closeMenu')
-    const { disableScroll, enableScroll } = scrollController(closeMenuUsingEsc)
-
     watch(route, () => {
       if (isOpen.value === 'navigation') {
         toggleState(isOpen.value)
-      }
-    })
-    watch(isOpen, (value) => {
-      if (value === 'navigation') {
-        disableScroll()
-      } else {
-        enableScroll()
       }
     })
 

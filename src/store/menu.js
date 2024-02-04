@@ -1,3 +1,5 @@
+import { scrollController } from '@/composables/scrollController'
+
 export const menu = {
   state: {
     isOpen: null
@@ -5,8 +7,10 @@ export const menu = {
   mutations: {
     TOGGLE_STATE(state, payload) {
       if (state.isOpen === payload) {
+        scrollController.enableScroll()
         state.isOpen = null
       } else {
+        scrollController.disableScroll()
         state.isOpen = payload
       }
     },
