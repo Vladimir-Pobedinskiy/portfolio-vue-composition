@@ -233,7 +233,7 @@
       "height": "20",
       "type": "soldier",
       "radio-control": "yes",
-      "quantity": "1",
+      "cartQuantity": "1",
       "maxQuantity": "2"
     },
     {
@@ -243,11 +243,13 @@
       "title": "The Archer",
       "imgUrl": "/img/hero/archer.png",
       "price": "1200",
+      "oldPrice": "2400",
+      "discount": "50",
       "material": "plastic",
       "height": "20",
       "type": "shooter",
       "radio-control": "no",
-      "quantity": "1",
+      "cartQuantity": "1",
       "maxQuantity": "6"
     },
     {
@@ -257,11 +259,13 @@
       "title": "The Giant",
       "imgUrl": "/img/hero/giant.png",
       "price": "1000",
+      "oldPrice": "2000",
+      "discount": "50",
       "material": "glass",
       "height": "20",
       "type": "soldier",
       "radio-control": "yes",
-      "quantity": "1",
+      "cartQuantity": "1",
       "maxQuantity": "6"
     },
     {
@@ -271,11 +275,13 @@
       "title": "The Goblin",
       "imgUrl": "/img/hero/goblin.png",
       "price": "1150",
+      "oldPrice": "2300",
+      "discount": "50",
       "material": "plastic",
       "height": "20",
       "type": "soldier",
       "radio-control": "yes",
-      "quantity": "1",
+      "cartQuantity": "1",
       "maxQuantity": "6"
     },
     {
@@ -285,11 +291,13 @@
       "title": "The Wizard",
       "imgUrl": "/img/hero/wizard.png",
       "price": "1300",
+      "oldPrice": "2600",
+      "discount": "50",
       "material": "metal",
       "height": "30",
       "type": "wizard",
       "radio-control": "yes",
-      "quantity": "1",
+      "cartQuantity": "1",
       "maxQuantity": "6"
     },
     {
@@ -299,11 +307,13 @@
       "title": "The Dragon",
       "imgUrl": "/img/hero/dragon.png",
       "price": "2530",
+      "oldPrice": "",
+      "discount": "",
       "material": "plastic",
       "height": "30",
       "type": "dragon",
       "radio-control": "yes",
-      "quantity": "1",
+      "cartQuantity": "1",
       "maxQuantity": "6"
     },
     {
@@ -313,11 +323,13 @@
       "title": "The Golem",
       "imgUrl": "/img/hero/golem.png",
       "price": "1700",
+      "oldPrice": "3400",
+      "discount": "50",
       "material": "glass",
       "height": "40",
       "type": "golem",
       "radio-control": "yes",
-      "quantity": "1",
+      "cartQuantity": "1",
       "maxQuantity": "6"
     },
     {
@@ -327,11 +339,13 @@
       "title": "The Archer queen",
       "imgUrl": "/img/hero/archer-queen.png",
       "price": "1600",
+      "oldPrice": "3200",
+      "discount": "50",
       "material": "plastic",
       "height": "30",
       "type": "shooter",
       "radio-control": "no",
-      "quantity": "1",
+      "cartQuantity": "1",
       "maxQuantity": "6"
     }
   ],

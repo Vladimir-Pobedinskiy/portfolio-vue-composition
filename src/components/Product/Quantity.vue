@@ -38,11 +38,11 @@ export default {
   name: 'ProductQuantity',
   props: {
     value: {
-      type: Number,
+      type: String,
       required: true
     },
     maxValue: {
-      type: Number,
+      type: String,
       required: true
     },
     minDisabled: {
