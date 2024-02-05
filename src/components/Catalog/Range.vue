@@ -83,7 +83,7 @@ export default {
 
     const debouncedHandler = debounce(() => {
       let parsedQuery = parse(route.query, { comma: true })
-      const requestObject = { minCost: minRange.value, maxCost: maxRange.value }
+      const requestObject = { minPrice: minRange.value, maxPrice: maxRange.value }
 
       if (parsedQuery.page) delete parsedQuery.page
 

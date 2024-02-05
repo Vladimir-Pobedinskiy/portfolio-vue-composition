@@ -205,13 +205,13 @@
     "sort": [
       {
         "title": "По возрастанию цены",
-        "field": "cost",
+        "field": "price",
         "order": "asc",
         "selected": false
       },
       {
         "title": "По убыванию цены",
-        "field": "cost",
+        "field": "price",
         "order": "desc",
         "selected": false
       }
@@ -226,12 +226,15 @@
       "alias": "barbarian",
       "title": "The Barbarian",
       "imgUrl": "/img/hero/barbarian.png",
-      "level": "3",
-      "cost": "1100",
+      "price": "1500",
+      "oldPrice": "3000",
+      "discount": "50",
       "material": "plastic",
       "height": "20",
       "type": "soldier",
-      "radio-control": "yes"
+      "radio-control": "yes",
+      "quantity": "1",
+      "maxQuantity": "2"
     },
     {
       "id": "2",
@@ -239,12 +242,13 @@
       "alias": "archer",
       "title": "The Archer",
       "imgUrl": "/img/hero/archer.png",
-      "level": "3",
-      "cost": "1200",
+      "price": "1200",
       "material": "plastic",
       "height": "20",
       "type": "shooter",
-      "radio-control": "no"
+      "radio-control": "no",
+      "quantity": "1",
+      "maxQuantity": "6"
     },
     {
       "id": "3",
@@ -252,12 +256,13 @@
       "alias": "giant",
       "title": "The Giant",
       "imgUrl": "/img/hero/giant.png",
-      "level": "2",
-      "cost": "1000",
+      "price": "1000",
       "material": "glass",
       "height": "20",
       "type": "soldier",
-      "radio-control": "yes"
+      "radio-control": "yes",
+      "quantity": "1",
+      "maxQuantity": "6"
     },
     {
       "id": "4",
@@ -265,12 +270,13 @@
       "alias": "goblin",
       "title": "The Goblin",
       "imgUrl": "/img/hero/goblin.png",
-      "level": "2",
-      "cost": "1150",
+      "price": "1150",
       "material": "plastic",
       "height": "20",
       "type": "soldier",
-      "radio-control": "yes"
+      "radio-control": "yes",
+      "quantity": "1",
+      "maxQuantity": "6"
     },
     {
       "id": "5",
@@ -278,12 +284,13 @@
       "alias": "wizard",
       "title": "The Wizard",
       "imgUrl": "/img/hero/wizard.png",
-      "level": "6",
-      "cost": "1300",
+      "price": "1300",
       "material": "metal",
       "height": "30",
       "type": "wizard",
-      "radio-control": "yes"
+      "radio-control": "yes",
+      "quantity": "1",
+      "maxQuantity": "6"
     },
     {
       "id": "6",
@@ -291,12 +298,13 @@
       "alias": "dragon",
       "title": "The Dragon",
       "imgUrl": "/img/hero/dragon.png",
-      "level": "4",
-      "cost": "2530",
+      "price": "2530",
       "material": "plastic",
       "height": "30",
       "type": "dragon",
-      "radio-control": "yes"
+      "radio-control": "yes",
+      "quantity": "1",
+      "maxQuantity": "6"
     },
     {
       "id": "7",
@@ -304,12 +312,13 @@
       "alias": "golem",
       "title": "The Golem",
       "imgUrl": "/img/hero/golem.png",
-      "level": "5",
-      "cost": "1700",
+      "price": "1700",
       "material": "glass",
       "height": "40",
       "type": "golem",
-      "radio-control": "yes"
+      "radio-control": "yes",
+      "quantity": "1",
+      "maxQuantity": "6"
     },
     {
       "id": "8",
@@ -317,12 +326,13 @@
       "alias": "archer-queen",
       "title": "The Archer queen",
       "imgUrl": "/img/hero/archer-queen.png",
-      "level": "7",
-      "cost": "1600",
+      "price": "1600",
       "material": "plastic",
       "height": "30",
       "type": "shooter",
-      "radio-control": "no"
+      "radio-control": "no",
+      "quantity": "1",
+      "maxQuantity": "6"
     }
   ],
   "heroes": {
@@ -362,7 +372,7 @@
             "value": "16"
           },
           {
-            "title": "cost",
+            "title": "price",
             "value": "150"
           }
         ]
@@ -384,7 +394,7 @@
             "value": "24"
           },
           {
-            "title": "cost",
+            "title": "price",
             "value": "300"
           }
         ]
@@ -406,7 +416,7 @@
             "value": "12"
           },
           {
-            "title": "cost",
+            "title": "price",
             "value": "2250"
           }
         ]
@@ -428,7 +438,7 @@
             "value": "32"
           },
           {
-            "title": "cost",
+            "title": "price",
             "value": "100"
           }
         ]
@@ -450,7 +460,7 @@
             "value": "16"
           },
           {
-            "title": "cost",
+            "title": "price",
             "value": "3800"
           }
         ]
@@ -489,7 +499,7 @@
           "value": "16"
         },
         {
-          "title": "cost",
+          "title": "price",
           "value": "150"
         }
       ]
@@ -527,7 +537,7 @@
           "value": "24"
         },
         {
-          "title": "cost",
+          "title": "price",
           "value": "300"
         }
       ]
@@ -565,7 +575,7 @@
           "value": "12"
         },
         {
-          "title": "cost",
+          "title": "price",
           "value": "2250"
         }
       ]
@@ -603,7 +613,7 @@
           "value": "32"
         },
         {
-          "title": "cost",
+          "title": "price",
           "value": "100"
         }
       ]
@@ -641,7 +651,7 @@
           "value": "16"
         },
         {
-          "title": "cost",
+          "title": "price",
           "value": "3800"
         }
       ]

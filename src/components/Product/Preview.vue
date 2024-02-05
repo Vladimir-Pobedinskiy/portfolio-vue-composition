@@ -6,9 +6,12 @@
       </div>
       <div class="product-preview__body">
         <span class="product-preview__title h3">{{ product.title }}</span>
-        <div class="product-preview__price-wrapper">
-          <span class="product-preview__level p1">level:{{ product.level}}</span>
-          <span class="product-preview__price p1">{{ priceFormatter(product.cost) }}</span>
+        <div class="product-preview__content">
+          <div class="product-preview__price-wrapper">
+            <span class="product-preview__price p1">{{ priceFormatter(product.price) }}</span>
+            <span v-if="product.oldPrice" class="product-preview__old-price price">{{ priceFormatter(product.oldPrice) }}</span>
+            <span v-if="product.discount" class="product-preview__discount name-product">{{ product.discount }}%</span>
+          </div>
         </div>
       </div>
       <button
@@ -51,6 +54,9 @@ export default {
     const isLoading = computed(() => store.getters.isLoading)
     const items = computed(() => store.getters.items)
     const addItem = (product) => store.dispatch('addItem', product)
+    const incrementItem = (product) => store.dispatch('addItem', product)
+    const decrementItem = (product) => store.dispatch('addItem', product)
+    // const updateItemQuantity = (product) => store.dispatch('addItem', product)
 
     const isInCart = computed(() => {
       const foundProduct = items.value.find((item) => item.id === product.value.id)
@@ -61,11 +67,33 @@ export default {
       addItem(product.value)
     }
 
+    const onQuantity = (event) => {
+      switch (event.currentTarget.dataset.action) {
+        case 'increase':
+          incrementItem(product.value)
+          break
+        case 'reduce':
+          if (this.product.quantity > 1) {
+            decrementItem(product.value)
+          } else {
+            // this.onRemove()
+          }
+          break
+        default:
+          break
+      }
+    }
+
+    // const onInput = (value) => {
+    //   updateItemQuantity({ id: product.id, quantity: value })
+    // }
+
     return {
       isLoading,
       priceFormatter,
       isInCart,
-      addToCart
+      addToCart,
+      onQuantity
     }
   }
 }
@@ -112,14 +140,37 @@ export default {
     display: block;
   }
 
-  &__price-wrapper {
+  &__content {
     margin: 0 auto 16px;
+    width: 100%;
+  }
+
+  &__price-wrapper {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 205px;
-    text-align: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  &__price {
+    margin-right: 8px;
+
+    @media (min-width:$desktop) {
+      margin-right: 12px;
+    }
+  }
+
+  &__old-price {
+    margin-right: 8px;
+    color: $color-gray-light;
+    text-decoration-line: line-through;
+
+    @media (min-width:$desktop) {
+      margin-right: 12px;
+    }
+  }
+
+  &__discount {
   }
 
   &__price {
@@ -129,6 +180,7 @@ export default {
   }
 
   &__link.btn-secondary.btn-secondary-small {
+    margin-top: auto;
     width: 100%;
   }
 }
