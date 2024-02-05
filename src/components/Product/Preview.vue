@@ -12,6 +12,14 @@
             <span v-if="product.oldPrice" class="product-preview__old-price price">{{ priceFormatter(product.oldPrice) }}</span>
             <span v-if="product.discount" class="product-preview__discount name-product">{{ product.discount }}%</span>
           </div>
+
+          <div class="product-preview__quantity-wrapper">
+            <ProductQuantity
+              :value="product.cartQuantity"
+              :max-value="product.maxQuantity"
+            />
+          </div>
+
         </div>
       </div>
       <button
@@ -40,8 +48,10 @@
 import { toRefs, computed } from 'vue'
 import { useStore } from 'vuex'
 import { priceFormatter } from '@/utils/utils'
+import ProductQuantity from '@/components/Product/Quantity'
 export default {
   name: 'ProductPreview',
+  components: { ProductQuantity },
   props: {
     product: {
       type: Object,
@@ -54,9 +64,6 @@ export default {
     const isLoading = computed(() => store.getters.isLoading)
     const items = computed(() => store.getters.items)
     const addItem = (product) => store.dispatch('addItem', product)
-    const incrementItem = (product) => store.dispatch('addItem', product)
-    const decrementItem = (product) => store.dispatch('addItem', product)
-    // const updateItemQuantity = (product) => store.dispatch('addItem', product)
 
     const isInCart = computed(() => {
       const foundProduct = items.value.find((item) => item.id === product.value.id)
@@ -67,44 +74,23 @@ export default {
       addItem(product.value)
     }
 
-    const onQuantity = (event) => {
-      switch (event.currentTarget.dataset.action) {
-        case 'increase':
-          incrementItem(product.value)
-          break
-        case 'reduce':
-          if (this.product.quantity > 1) {
-            decrementItem(product.value)
-          } else {
-            // this.onRemove()
-          }
-          break
-        default:
-          break
-      }
-    }
-
-    // const onInput = (value) => {
-    //   updateItemQuantity({ id: product.id, quantity: value })
-    // }
-
     return {
       isLoading,
       priceFormatter,
       isInCart,
-      addToCart,
-      onQuantity
+      addToCart
     }
   }
 }
 </script>
 
 <style lang="scss">
+
 .product-preview {
   padding: 16px;
   width: 100%;
-  height: 100%;
   max-width: 442px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   border-radius: 16px;
@@ -124,7 +110,7 @@ export default {
     }
 
     @media (min-width:$desktop-big) {
-      height: 290px;
+      height: 250px;
     }
   }
 
@@ -136,19 +122,24 @@ export default {
   }
 
   &__title {
-    margin: 24px 0 8px;
+    margin: 12px 0 8px;
     display: block;
   }
 
   &__content {
     margin: 0 auto 16px;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
   }
 
   &__price-wrapper {
+    margin-bottom: 8px;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: flex-end;
     flex-wrap: wrap;
   }
 
@@ -173,15 +164,17 @@ export default {
   &__discount {
   }
 
-  &__price {
-  }
-
-  &__body {
+  &__quantity-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
   }
 
   &__link.btn-secondary.btn-secondary-small {
     margin-top: auto;
     width: 100%;
   }
+
 }
 </style>
