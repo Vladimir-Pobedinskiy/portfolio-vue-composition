@@ -5,7 +5,6 @@
       type="button"
       title="убавить"
       data-action="reduce"
-      :disabled="minDisabled"
       v-bind="$attrs"
     >
       <UIIcon icon-name="mdi-minus" class-name="quantity__btn-icon" width="16px" height="16px" />
@@ -34,33 +33,61 @@
 </template>
 
 <script>
+import { ref, toRefs } from 'vue'
 export default {
   name: 'ProductQuantity',
   props: {
     value: {
-      type: String,
+      type: Number,
       required: true
     },
     maxValue: {
-      type: String,
+      type: Number,
       required: true
-    },
-    minDisabled: {
-      type: Boolean,
-      required: false,
-      default() {
-        return false
-      }
-    },
-    maxDisabled: {
-      type: Boolean,
-      required: false,
-      default() {
-        return false
-      }
     }
   },
-  methods: {
+  emits: ['input'],
+  setup(props, { emit }) {
+    const { maxValue } = toRefs(props)
+    const inputRef = ref(null)
+
+    const handleInput = (event) => {
+      const inputValue = event.target.value
+      let newValue = ''
+      for (let i = 0; i < inputValue.length && i <= maxValue.value.toString().length - 1; i++) {
+        if (i === 0 && inputValue[i] === '0') {
+          newValue += '1'
+        } else if (/^\d+$/.test(inputValue[i])) {
+          newValue += inputValue[i]
+        }
+      }
+      event.target.value = newValue
+
+      if (event.target.value >= maxValue.value) {
+        event.target.value = maxValue.value
+      }
+    }
+
+    const handleEnter = () => {
+      inputRef.value.blur()
+    }
+
+    const handleBlur = (event) => {
+      let inputValue = event.target.value.replace(/[^0-9]/g, '')
+      if (inputValue === '' || inputValue.charAt(0) === '0') {
+        inputValue = '1'
+        event.target.value = inputValue
+      }
+
+      emit('input', parseInt(inputValue, 10))
+    }
+
+    return {
+      inputRef,
+      handleInput,
+      handleEnter,
+      handleBlur
+    }
   }
 }
 </script>
@@ -81,9 +108,14 @@ export default {
     background-color: transparent;
 
     &:disabled {
-      opacity: 0.2;
+      opacity: 0.5;
       cursor: default;
     }
+  }
+
+  &__btn-icon {
+    width: 16px;
+    height: 16px;
   }
 
   &__input {

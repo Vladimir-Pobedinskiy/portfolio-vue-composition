@@ -13,10 +13,12 @@
             <span v-if="product.discount" class="product-preview__discount name-product">{{ product.discount }}%</span>
           </div>
 
-          <div class="product-preview__quantity-wrapper">
+          <div v-if="isInCart" class="product-preview__quantity-wrapper">
             <ProductQuantity
-              :value="product.cartQuantity"
+              :value="cartQuantity"
               :max-value="product.maxQuantity"
+              @click.stop.prevent="onQuantity($event)"
+              @input="onInput"
             />
           </div>
 
@@ -65,20 +67,56 @@ export default {
     const items = computed(() => store.getters.items)
     const addItem = (product) => store.dispatch('addItem', product)
 
+    const incrementItem = (cartItem) => store.dispatch('incrementItem', cartItem)
+    const decrementItem = (cartItem) => store.dispatch('decrementItem', cartItem)
+    const updateItemQuantity = ([product, quantity]) => store.dispatch('updateItemQuantity', [product, quantity])
+    const removeItem = (product) => store.dispatch('removeItem', product)
+
     const isInCart = computed(() => {
-      const foundProduct = items.value.find((item) => item.id === product.value.id)
-      return Boolean(foundProduct)
+      const found = items.value.find((item) => item.id === product.value.id)
+      return Boolean(found)
+    })
+    const cartItem = computed(() => {
+      return items.value.find((item) => item.id === product.value.id)
+    })
+    // cartQuantity для получения актуального quantity после routing или обновлении страницы
+    const cartQuantity = computed(() => {
+      return cartItem.value ? cartItem.value.cartQuantity : 0
     })
 
     const addToCart = () => {
       addItem(product.value)
     }
 
+    const onQuantity = (event) => {
+      switch (event.currentTarget.dataset.action) {
+        case 'increase':
+          incrementItem(cartItem.value)
+          break
+        case 'reduce':
+          if (cartItem.value.cartQuantity > 1) {
+            decrementItem(cartItem.value)
+          } else {
+            removeItem(cartItem.value)
+          }
+          break
+        default:
+          break
+      }
+    }
+
+    const onInput = (quantity) => {
+      updateItemQuantity([product.value, quantity])
+    }
+
     return {
       isLoading,
       priceFormatter,
       isInCart,
-      addToCart
+      addToCart,
+      onQuantity,
+      onInput,
+      cartQuantity
     }
   }
 }
@@ -159,9 +197,6 @@ export default {
     @media (min-width:$desktop) {
       margin-right: 12px;
     }
-  }
-
-  &__discount {
   }
 
   &__quantity-wrapper {

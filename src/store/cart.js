@@ -39,15 +39,15 @@ export const cart = {
     UPDATE_ITEMS(state, payload) {
       state.items = payload
     },
-    UPDATE_ITEM_QUANTITY(state, payload) {
-      const found = state.items.find((item) => item.id === payload.id)
+    UPDATE_ITEM_QUANTITY(state, [product, quantity]) {
+      const found = state.items.find((item) => item.id === product.id)
 
       if (found) {
-        found.cartQuantity = +payload.cartQuantity
-      } else if ('cartQuantity' in payload) {
-        state.items.push(payload)
+        found.cartQuantity = +quantity
+      } else if ('cartQuantity' in product) {
+        state.items.push(product)
       } else {
-        state.items.push({ ...payload, cartQuantity: 1 })
+        state.items.push({ ...product, cartQuantity: 1 })
       }
     }
   },
