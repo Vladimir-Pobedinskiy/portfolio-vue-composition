@@ -94,7 +94,7 @@ export default {
 
 <style lang="scss">
 .quantity {
-  padding: 10px;
+  padding: 8px;
   width: 104px;
   border: 1px solid $color-gray;
   display: flex;

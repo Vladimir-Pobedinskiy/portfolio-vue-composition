@@ -79,7 +79,7 @@ export default {
     const cartItem = computed(() => {
       return items.value.find((item) => item.id === product.value.id)
     })
-    // cartQuantity для получения актуального quantity после routing или обновлении страницы
+    // cartQuantity для получения актуального quantity в т.ч. после routing или обновлении страницы
     const cartQuantity = computed(() => {
       return cartItem.value ? cartItem.value.cartQuantity : 0
     })
